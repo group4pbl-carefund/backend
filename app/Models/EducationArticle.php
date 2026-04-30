@@ -12,7 +12,7 @@ class EducationArticle extends Model
         'title',
         'content',
         'category',
-        'author',
+        'author_id',
         'thumbnail_url',
         'status',
         'published_at',

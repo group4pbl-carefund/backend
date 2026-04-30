@@ -71,4 +71,29 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserIdentity::class);
     }
+
+    public function sessions()
+    {
+        return $this->hasMany(UserSession::class);
+    }
+
+    public function termsAgreements()
+    {
+        return $this->hasMany(UserTermsAgreement::class);
+    }
+
+    public function securityMonitorings()
+    {
+        return $this->hasMany(SecurityMonitoring::class);
+    }
+
+    public function educationArticles()
+    {
+        return $this->hasMany(EducationArticle::class, 'author_id');
+    }
+
+    public function educationViews()
+    {
+        return $this->hasMany(EducationView::class);
+    }
 }

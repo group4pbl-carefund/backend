@@ -18,4 +18,9 @@ class SecurityMonitoring extends Model
         'description',
         'details'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

@@ -20,4 +20,9 @@ class UserTermsAgreement extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function version()
+    {
+        return $this->belongsTo(TermVersion::class, 'version_id');
+    }
 }
