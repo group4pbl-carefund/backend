@@ -3,18 +3,27 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Http\Requests\UpdateUserRequest;
+use App\Http\Resources\UserResource;
+use App\Http\Services\UserService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    protected $userService;
+
+    public function __construct(UserService $userService)
+    {
+        $this->userService = $userService;
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $users = User::paginate(10);
-        return response()->json($users);
+        $users = $this->userService->getAllUsers();
+        return UserResource::collection($users);
     }
 
     /**
@@ -22,31 +31,19 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return response()->json($user);
+        return new UserResource($user);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
+    public function update(UpdateUserRequest $request, User $user)
     {
-        $request->validate([
-            'full_name' => 'sometimes|required|string|max:255',
-            'email' => 'sometimes|required|string|email|max:255|unique:users,email,' . $user->id,
-            'phone' => 'nullable|string|max:20',
-            'date_of_birth' => 'nullable|date',
-            'gender' => 'nullable|string|in:male,female,other',
-            'address' => 'nullable|string',
-            'city' => 'nullable|string|max:100',
-            'state' => 'nullable|string|max:100',
-            'country' => 'nullable|string|max:100',
-        ]);
-
-        $user->update($request->all());
+        $updatedUser = $this->userService->updateUser($user, $request->validated());
 
         return response()->json([
             'message' => 'User updated successfully',
-            'user' => $user
+            'user' => new UserResource($updatedUser)
         ]);
     }
 
@@ -55,7 +52,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        $user->delete();
+        $this->userService->deleteUser($user);
 
         return response()->json([
             'message' => 'User deleted successfully'
