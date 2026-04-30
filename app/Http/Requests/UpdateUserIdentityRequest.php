@@ -1,29 +1,16 @@
 <?php
-
 namespace App\Http\Requests;
 
-use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateUserIdentityRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
-    public function authorize(): bool
-    {
-        return false;
-    }
-
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, ValidationRule|array<mixed>|string>
-     */
-    public function rules(): array
-    {
+    public function authorize(): bool { return true; }
+    public function rules(): array {
         return [
-            //
+            'is_verified' => 'boolean',
+            'verified_at' => 'date|nullable',
+            'verified_by' => 'exists:users,id|nullable',
         ];
     }
 }

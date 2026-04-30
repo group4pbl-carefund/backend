@@ -1,48 +1,16 @@
 <?php
-
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreUserIdentityRequest;
+use App\Http\Requests\UpdateUserIdentityRequest;
+use App\Http\Resources\UserIdentityResource;
+use App\Models\UserIdentity;
 
 class UserIdentityController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
+    public function index() { return UserIdentityResource::collection(UserIdentity::all()); }
+    public function store(StoreUserIdentityRequest $request) { return new UserIdentityResource(UserIdentity::create($request->validated())); }
+    public function show(UserIdentity $userIdentity) { return new UserIdentityResource($userIdentity); }
+    public function update(UpdateUserIdentityRequest $request, UserIdentity $userIdentity) { $userIdentity->update($request->validated()); return new UserIdentityResource($userIdentity); }
+    public function destroy(UserIdentity $userIdentity) { $userIdentity->delete(); return response()->noContent(); }
 }

@@ -1,48 +1,16 @@
 <?php
-
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreTermVersionRequest;
+use App\Http\Requests\UpdateTermVersionRequest;
+use App\Http\Resources\TermVersionResource;
+use App\Models\TermVersion;
 
 class TermVersionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
+    public function index() { return TermVersionResource::collection(TermVersion::all()); }
+    public function store(StoreTermVersionRequest $request) { return new TermVersionResource(TermVersion::create($request->validated())); }
+    public function show(TermVersion $termVersion) { return new TermVersionResource($termVersion); }
+    public function update(UpdateTermVersionRequest $request, TermVersion $termVersion) { $termVersion->update($request->validated()); return new TermVersionResource($termVersion); }
+    public function destroy(TermVersion $termVersion) { $termVersion->delete(); return response()->noContent(); }
 }
