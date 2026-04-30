@@ -9,6 +9,10 @@ use App\Http\Controllers\TermVersionController;
 use App\Http\Controllers\SecurityMonitoringController;
 use App\Http\Controllers\EducationArticleController;
 use App\Http\Controllers\EducationViewController;
+use App\Http\Controllers\ProgramController;
+use App\Http\Controllers\ProgramCampaignController;
+use App\Http\Controllers\ProgramCategoryController;
+use App\Http\Controllers\ProgramCategoryMapping.Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,7 +22,7 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/me', [AuthController::class, 'me']);
     Route::post('/logout', [AuthController::class, 'logout']);
-    
+
     Route::apiResource('users', UserController::class);
     Route::apiResource('user-identities', UserIdentityController::class);
     Route::apiResource('user-sessions', UserSessionController::class)->only(['index', 'show', 'destroy']);
@@ -27,4 +31,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('security-monitorings', SecurityMonitoringController::class)->only(['index', 'show']);
     Route::apiResource('education-articles', EducationArticleController::class);
     Route::apiResource('education-views', EducationViewController::class)->only(['index', 'store', 'show']);
+    Route::apiResource('programs', ProgramController::class);
+    Route::apiResource('program-campaigns', ProgramCampaignController::class);
+    Route::apiResource('program-categories', ProgramCategoryController::class);
+    Route::apiResource('program-category-mappings', ProgramCategoryMappingController::class);
 });
