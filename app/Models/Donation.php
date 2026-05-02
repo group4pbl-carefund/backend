@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Donation extends Model
 {
@@ -21,21 +22,13 @@ class Donation extends Model
         'paid_at'
     ];
 
-    protected function casts(): array
+    public function program(): BelongsTo
     {
-        return [
-            'is_anonymous' => 'boolean',
-            'paid_at' => 'datetime',
-        ];
+        return $this->belongsTo(Program::class);
     }
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function program()
-    {
-        return $this->belongsTo(Program::class, 'program_id');
     }
 }
