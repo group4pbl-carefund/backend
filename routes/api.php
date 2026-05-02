@@ -13,7 +13,10 @@ use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\ProgramCampaignController;
 use App\Http\Controllers\ProgramCategoryController;
 use App\Http\Controllers\ProgramCategoryMappingController;
-use App\Http\Controllers\Api\DonationController; // Controller punyamu
+use App\Http\Controllers\Api\DonationController;
+use App\Http\Controllers\Api\DistributionController;
+use App\Http\Controllers\Api\PaymentLogController;
+use App\Http\Controllers\Api\DistributionUpdateController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -35,10 +38,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('programs', ProgramController::class);
     Route::apiResource('program-campaigns', ProgramCampaignController::class);
     Route::apiResource('program-categories', ProgramCategoryController::class);
-    Route::apiResource('program-category-mappings', ProgramCategoryMappingController::class);
+    //Route::apiResource('program-category-mappings', ProgramCategoryMappingController::class);
     
     Route::apiResource('donations', DonationController::class);
-    Route::apiResource('distributions', \App\Http\Controllers\Api\DistributionController::class);
-    Route::apiResource('payment-logs', \App\Http\Controllers\Api\PaymentLogController::class);
-    Route::apiResource('distribution-updates', \App\Http\Controllers\Api\DistributionUpdateController::class);
+    Route::apiResource('distributions', DistributionController::class);
+    Route::apiResource('payment-logs', PaymentLogController::class);
+    Route::apiResource('distribution-updates', DistributionUpdateController::class);
 });
