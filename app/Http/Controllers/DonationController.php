@@ -17,12 +17,22 @@ class DonationController extends Controller
         $this->donationService = $donationService;
     }
 
+    /**
+     * Menampilkan daftar data.
+     *
+     * Endpoint ini mengembalikan semua record yang tersedia.
+     */
     public function index()
     {
         $donations = $this->donationService->getAll();
         return $this->successResponse(DonationResource::collection($donations));
     }
 
+    /**
+     * Menambahkan data baru.
+     *
+     * Endpoint ini digunakan untuk membuat record baru di database.
+     */
     public function store(StoreDonationRequest $request): JsonResponse
     {
         $donation = $this->donationService->store($request->validated());

@@ -23,6 +23,12 @@ class DistributionController extends Controller
     /**
      * Menampilkan daftar distribusi.
      */
+
+    /**
+     * Menampilkan daftar data.
+     *
+     * Endpoint ini mengembalikan semua record yang tersedia.
+     */
     public function index()
     {
         $distributions = $this->distributionService->getAll();
@@ -31,6 +37,12 @@ class DistributionController extends Controller
 
     /**
      * Menyimpan data distribusi baru.
+     */
+
+    /**
+     * Menambahkan data baru.
+     *
+     * Endpoint ini digunakan untuk membuat record baru di database.
      */
     public function store(StoreDistributionRequest $request): JsonResponse
     {

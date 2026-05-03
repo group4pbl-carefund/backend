@@ -20,6 +20,12 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    /**
+     * Menampilkan daftar data.
+     *
+     * Endpoint ini mengembalikan semua record yang tersedia.
+     */
     public function index()
     {
         $users = $this->userService->getAllUsers();
@@ -29,6 +35,12 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
+
+    /**
+     * Menampilkan detail data.
+     *
+     * Endpoint ini mengembalikan detail spesifik dari sebuah record berdasarkan ID.
+     */
     public function show(User $user)
     {
         return $this->successResponse(new UserResource($user));
@@ -36,6 +48,12 @@ class UserController extends Controller
 
     /**
      * Update the specified resource in storage.
+     */
+
+    /**
+     * Memperbarui data.
+     *
+     * Endpoint ini digunakan untuk mengupdate record yang sudah ada di database.
      */
     public function update(UpdateUserRequest $request, User $user)
     {
@@ -46,6 +64,12 @@ class UserController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     */
+
+    /**
+     * Menghapus data.
+     *
+     * Endpoint ini digunakan untuk menghapus record dari database secara permanen.
      */
     public function destroy(User $user)
     {

@@ -9,6 +9,12 @@ use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
+
+    /**
+     * Registrasi pengguna baru.
+     *
+     * Membuat akun pengguna baru dan mengembalikan token akses.
+     */
     public function register(Request $request)
     {
         $request->validate([
@@ -43,6 +49,11 @@ class AuthController extends Controller
         return $this->successResponse(['access_token' => $token, 'token_type' => 'Bearer', 'user' => $user], 'Registration successful', 201);
     }
 
+    /**
+     * Autentikasi pengguna (Login).
+     *
+     * Memverifikasi kredensial pengguna dan mengembalikan token akses.
+     */
     public function login(Request $request)
     {
         $request->validate([
@@ -63,6 +74,11 @@ class AuthController extends Controller
         return $this->successResponse(['access_token' => $token, 'token_type' => 'Bearer', 'user' => $user], 'Login successful');
     }
 
+    /**
+     * Keluar dari sesi (Logout).
+     *
+     * Mencabut dan menghapus token akses yang sedang aktif.
+     */
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();
@@ -70,6 +86,11 @@ class AuthController extends Controller
         return $this->deletedResponse('Logged out successfully');
     }
 
+    /**
+     * Profil Pengguna Saat Ini.
+     *
+     * Mengembalikan data profil untuk pengguna yang sedang terautentikasi.
+     */
     public function me(Request $request)
     {
         return $this->successResponse($request->user());
