@@ -8,9 +8,9 @@ use App\Models\UserIdentity;
 
 class UserIdentityController extends Controller
 {
-    public function index() { return UserIdentityResource::collection(UserIdentity::all()); }
-    public function store(StoreUserIdentityRequest $request) { return new UserIdentityResource(UserIdentity::create($request->validated())); }
-    public function show(UserIdentity $userIdentity) { return new UserIdentityResource($userIdentity); }
-    public function update(UpdateUserIdentityRequest $request, UserIdentity $userIdentity) { $userIdentity->update($request->validated()); return new UserIdentityResource($userIdentity); }
-    public function destroy(UserIdentity $userIdentity) { $userIdentity->delete(); return response()->noContent(); }
+    public function index() { return $this->successResponse(UserIdentityResource::collection(UserIdentity::all())); }
+    public function store(StoreUserIdentityRequest $request) { return $this->successResponse(new UserIdentityResource(UserIdentity::create($request->validated()))); }
+    public function show(UserIdentity $userIdentity) { return $this->successResponse(new UserIdentityResource($userIdentity)); }
+    public function update(UpdateUserIdentityRequest $request, UserIdentity $userIdentity) { $userIdentity->update($request->validated()); return $this->successResponse(new UserIdentityResource($userIdentity)); }
+    public function destroy(UserIdentity $userIdentity) { $userIdentity->delete(); return $this->deletedResponse(); }
 }

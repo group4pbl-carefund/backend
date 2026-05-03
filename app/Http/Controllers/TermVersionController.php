@@ -8,9 +8,9 @@ use App\Models\TermVersion;
 
 class TermVersionController extends Controller
 {
-    public function index() { return TermVersionResource::collection(TermVersion::all()); }
-    public function store(StoreTermVersionRequest $request) { return new TermVersionResource(TermVersion::create($request->validated())); }
-    public function show(TermVersion $termVersion) { return new TermVersionResource($termVersion); }
-    public function update(UpdateTermVersionRequest $request, TermVersion $termVersion) { $termVersion->update($request->validated()); return new TermVersionResource($termVersion); }
-    public function destroy(TermVersion $termVersion) { $termVersion->delete(); return response()->noContent(); }
+    public function index() { return $this->successResponse(TermVersionResource::collection(TermVersion::all())); }
+    public function store(StoreTermVersionRequest $request) { return $this->successResponse(new TermVersionResource(TermVersion::create($request->validated()))); }
+    public function show(TermVersion $termVersion) { return $this->successResponse(new TermVersionResource($termVersion)); }
+    public function update(UpdateTermVersionRequest $request, TermVersion $termVersion) { $termVersion->update($request->validated()); return $this->successResponse(new TermVersionResource($termVersion)); }
+    public function destroy(TermVersion $termVersion) { $termVersion->delete(); return $this->deletedResponse(); }
 }

@@ -40,11 +40,7 @@ class AuthController extends Controller
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
-        return response()->json([
-            'access_token' => $token,
-            'token_type' => 'Bearer',
-            'user' => $user,
-        ], 201);
+        return $this->successResponse(['access_token' => $token, 'token_type' => 'Bearer', 'user' => $user], 'Registration successful', 201);
     }
 
     public function login(Request $request)
@@ -64,25 +60,19 @@ class AuthController extends Controller
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
-        return response()->json([
-            'access_token' => $token,
-            'token_type' => 'Bearer',
-            'user' => $user,
-        ]);
+        return $this->successResponse(['access_token' => $token, 'token_type' => 'Bearer', 'user' => $user], 'Login successful');
     }
 
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();
 
-        return response()->json([
-            'message' => 'Logged out successfully'
-        ]);
+        return $this->deletedResponse('Logged out successfully');
     }
 
     public function me(Request $request)
     {
-        return response()->json($request->user());
+        return $this->successResponse($request->user());
     }
 
     public function refresh()

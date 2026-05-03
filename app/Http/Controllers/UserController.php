@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\UserResource;
-use App\Http\Services\UserService;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -23,7 +23,7 @@ class UserController extends Controller
     public function index()
     {
         $users = $this->userService->getAllUsers();
-        return UserResource::collection($users);
+        return $this->successResponse(UserResource::collection($users));
     }
 
     /**
@@ -31,7 +31,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return new UserResource($user);
+        return $this->successResponse(new UserResource($user));
     }
 
     /**
@@ -41,10 +41,7 @@ class UserController extends Controller
     {
         $updatedUser = $this->userService->updateUser($user, $request->validated());
 
-        return response()->json([
-            'message' => 'User updated successfully',
-            'user' => new UserResource($updatedUser)
-        ]);
+        return $this->updatedResponse(new UserResource($updatedUser), 'User updated successfully');
     }
 
     /**
@@ -54,8 +51,6 @@ class UserController extends Controller
     {
         $this->userService->deleteUser($user);
 
-        return response()->json([
-            'message' => 'User deleted successfully'
-        ]);
+        return $this->deletedResponse('User deleted successfully');
     }
 }
