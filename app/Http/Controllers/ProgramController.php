@@ -27,12 +27,14 @@ class ProgramController extends Controller
     public function update(UpdateProgramRequest $request, Program $program)
     {
         $program->update($request->validated());
+
         return $this->successResponse(new ProgramResource($program));
     }
 
     public function destroy(Program $program)
     {
         $program->delete();
+
         return $this->deletedResponse();
     }
 }
