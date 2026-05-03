@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\DistributionUpdate\StoreDistributionUpdateRequest;
 use App\Http\Resources\DistributionUpdateResource;
 use App\Services\DistributionUpdateService;
@@ -35,9 +34,7 @@ class DistributionUpdateController extends Controller
     public function store(StoreDistributionUpdateRequest $request): JsonResponse
     {
         $update = $this->service->store($request->validated());
-        return response()->json([
-            'success' => true,
-            'data'    => new DistributionUpdateResource($update)
-        ], 201);
+
+        return $this->successResponse(new DistributionUpdateResource($update));
     }
 }
