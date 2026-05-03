@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreProgramRequest;
-use App\Http\Requests\UpdateProgramRequest;
+use App\Http\Requests\Program\StoreProgramRequest;
+use App\Http\Requests\Program\UpdateProgramRequest;
 use App\Http\Resources\ProgramResource;
 use App\Models\Program;
 

@@ -4,11 +4,11 @@ use App\Models\EducationView;
 use Illuminate\Http\Request;
 
 class EducationViewController extends Controller {
-    public function index() { return response()->json(EducationView::all()); }
+    public function index() { return $this->successResponse(EducationView::all()); }
     public function store(Request $request) {
         $validated = $request->validate(['user_id' => 'required|exists:users,id', 'article_id' => 'required|exists:education_articles,article_id']);
         $validated['viewed_at'] = now();
-        return response()->json(EducationView::create($validated), 201);
+        return $this->successResponse(EducationView::create($validated), 'Created', 201);
     }
-    public function show(EducationView $educationView) { return response()->json($educationView); }
+    public function show(EducationView $educationView) { return $this->successResponse($educationView); }
 }

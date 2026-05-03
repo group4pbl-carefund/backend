@@ -1,8 +1,8 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreTermVersionRequest;
-use App\Http\Requests\UpdateTermVersionRequest;
+use App\Http\Requests\TermVersion\StoreTermVersionRequest;
+use App\Http\Requests\TermVersion\UpdateTermVersionRequest;
 use App\Http\Resources\TermVersionResource;
 use App\Models\TermVersion;
 

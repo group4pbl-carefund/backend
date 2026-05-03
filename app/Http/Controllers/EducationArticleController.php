@@ -1,8 +1,8 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreEducationArticleRequest;
-use App\Http\Requests\UpdateEducationArticleRequest;
+use App\Http\Requests\EducationArticle\StoreEducationArticleRequest;
+use App\Http\Requests\EducationArticle\UpdateEducationArticleRequest;
 use App\Http\Resources\EducationArticleResource;
 use App\Models\EducationArticle;
 

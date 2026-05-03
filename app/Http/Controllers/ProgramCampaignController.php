@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreProgramCampaignRequest;
-use App\Http\Requests\UpdateProgramCampaignRequest;
+use App\Http\Requests\ProgramCampaign\StoreProgramCampaignRequest;
+use App\Http\Requests\ProgramCampaign\UpdateProgramCampaignRequest;
 use App\Http\Resources\ProgramCampaignResource;
 use App\Models\ProgramCampaign;
 use App\Services\ProgramCampaignService;

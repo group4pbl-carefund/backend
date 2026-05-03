@@ -1,8 +1,8 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreUserIdentityRequest;
-use App\Http\Requests\UpdateUserIdentityRequest;
+use App\Http\Requests\UserIdentity\StoreUserIdentityRequest;
+use App\Http\Requests\UserIdentity\UpdateUserIdentityRequest;
 use App\Http\Resources\UserIdentityResource;
 use App\Models\UserIdentity;
 
