@@ -19,6 +19,14 @@ use App\Http\Controllers\UserSessionController;
 use App\Http\Controllers\UserTermsAgreementController;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/health', function () {
+    return response()->json([
+        'name' => 'Carefund API',
+        'status' => 'OK',
+        'timestamp' => now()->toIso8601String()
+    ]);
+});
+
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
