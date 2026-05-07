@@ -11,9 +11,9 @@ class ProgramController extends Controller
 {
 
     /**
-     * Menampilkan daftar data.
+     * Menampilkan daftar program.
      *
-     * Endpoint ini mengembalikan semua record yang tersedia.
+     * Mengambil semua data program donasi yang tersedia.
      */
     public function index()
     {
@@ -21,9 +21,9 @@ class ProgramController extends Controller
     }
 
     /**
-     * Menambahkan data baru.
+     * Membuat program baru.
      *
-     * Endpoint ini digunakan untuk membuat record baru di database.
+     * Mendaftarkan program donasi baru ke dalam sistem.
      */
     public function store(StoreProgramRequest $request)
     {
@@ -31,9 +31,9 @@ class ProgramController extends Controller
     }
 
     /**
-     * Menampilkan detail data.
+     * Menampilkan detail program.
      *
-     * Endpoint ini mengembalikan detail spesifik dari sebuah record berdasarkan ID.
+     * Mengambil detail spesifik dari sebuah program berdasarkan ID.
      */
     public function show(Program $program)
     {
@@ -41,9 +41,9 @@ class ProgramController extends Controller
     }
 
     /**
-     * Memperbarui data.
+     * Memperbarui data program.
      *
-     * Endpoint ini digunakan untuk mengupdate record yang sudah ada di database.
+     * Mengubah informasi pada program yang sudah ada.
      */
     public function update(UpdateProgramRequest $request, Program $program)
     {
@@ -53,9 +53,9 @@ class ProgramController extends Controller
     }
 
     /**
-     * Menghapus data.
+     * Menghapus program.
      *
-     * Endpoint ini digunakan untuk menghapus record dari database secara permanen.
+     * Menghapus data program dari sistem secara permanen.
      */
     public function destroy(Program $program)
     {

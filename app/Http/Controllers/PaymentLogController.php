@@ -18,9 +18,9 @@ class PaymentLogController extends Controller
     }
 
     /**
-     * Menampilkan daftar data.
+     * Menampilkan daftar log pembayaran.
      *
-     * Endpoint ini mengembalikan semua record yang tersedia.
+     * Mengambil semua riwayat log transaksi pembayaran dari database.
      */
     public function index()
     {
@@ -28,9 +28,9 @@ class PaymentLogController extends Controller
     }
 
     /**
-     * Menambahkan data baru.
+     * Mencatat log pembayaran baru.
      *
-     * Endpoint ini digunakan untuk membuat record baru di database.
+     * Membuat record log baru untuk setiap aktivitas pembayaran.
      */
     public function store(StorePaymentLogRequest $request): JsonResponse
     {

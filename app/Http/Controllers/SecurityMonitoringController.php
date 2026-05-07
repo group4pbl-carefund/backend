@@ -6,16 +6,22 @@ use Illuminate\Http\Request;
 class SecurityMonitoringController extends Controller {
 
     /**
-     * Menampilkan daftar data.
+     * Menampilkan daftar log keamanan.
      *
-     * Endpoint ini mengembalikan semua record yang tersedia.
+     * Mengambil semua catatan aktivitas keamanan sistem.
      */
-    public function index() { return $this->successResponse(SecurityMonitoring::all()); }
+    public function index()
+    {
+        return $this->successResponse(SecurityMonitoring::all());
+    }
 
     /**
-     * Menampilkan detail data.
+     * Menampilkan detail log keamanan.
      *
-     * Endpoint ini mengembalikan detail spesifik dari sebuah record berdasarkan ID.
+     * Mengambil informasi detail dari satu aktivitas keamanan berdasarkan ID.
      */
-    public function show(SecurityMonitoring $securityMonitoring) { return $this->successResponse($securityMonitoring); }
+    public function show(SecurityMonitoring $securityMonitoring)
+    {
+        return $this->successResponse($securityMonitoring);
+    }
 }

@@ -10,37 +10,54 @@ class UserIdentityController extends Controller
 {
 
     /**
-     * Menampilkan daftar data.
+     * Menampilkan daftar identitas pengguna.
      *
-     * Endpoint ini mengembalikan semua record yang tersedia.
+     * Mengambil semua data identitas (KTP/Passport) yang telah diunggah pengguna.
      */
-    public function index() { return $this->successResponse(UserIdentityResource::collection(UserIdentity::all())); }
+    public function index()
+    {
+        return $this->successResponse(UserIdentityResource::collection(UserIdentity::all()));
+    }
 
     /**
-     * Menambahkan data baru.
+     * Mengunggah identitas baru.
      *
-     * Endpoint ini digunakan untuk membuat record baru di database.
+     * Menambahkan dokumen identitas baru untuk verifikasi akun pengguna.
      */
-    public function store(StoreUserIdentityRequest $request) { return $this->successResponse(new UserIdentityResource(UserIdentity::create($request->validated()))); }
+    public function store(StoreUserIdentityRequest $request)
+    {
+        return $this->successResponse(new UserIdentityResource(UserIdentity::create($request->validated())));
+    }
 
     /**
-     * Menampilkan detail data.
+     * Menampilkan detail identitas.
      *
-     * Endpoint ini mengembalikan detail spesifik dari sebuah record berdasarkan ID.
+     * Mengambil informasi lengkap dari satu dokumen identitas berdasarkan ID.
      */
-    public function show(UserIdentity $userIdentity) { return $this->successResponse(new UserIdentityResource($userIdentity)); }
+    public function show(UserIdentity $userIdentity)
+    {
+        return $this->successResponse(new UserIdentityResource($userIdentity));
+    }
 
     /**
-     * Memperbarui data.
+     * Memperbarui data identitas.
      *
-     * Endpoint ini digunakan untuk mengupdate record yang sudah ada di database.
+     * Mengubah informasi pada dokumen identitas yang sudah ada.
      */
-    public function update(UpdateUserIdentityRequest $request, UserIdentity $userIdentity) { $userIdentity->update($request->validated()); return $this->successResponse(new UserIdentityResource($userIdentity)); }
+    public function update(UpdateUserIdentityRequest $request, UserIdentity $userIdentity)
+    {
+        $userIdentity->update($request->validated());
+        return $this->successResponse(new UserIdentityResource($userIdentity));
+    }
 
     /**
-     * Menghapus data.
+     * Menghapus identitas.
      *
-     * Endpoint ini digunakan untuk menghapus record dari database secara permanen.
+     * Menghapus record dokumen identitas dari database secara permanen.
      */
-    public function destroy(UserIdentity $userIdentity) { $userIdentity->delete(); return $this->deletedResponse(); }
+    public function destroy(UserIdentity $userIdentity)
+    {
+        $userIdentity->delete();
+        return $this->deletedResponse();
+    }
 }

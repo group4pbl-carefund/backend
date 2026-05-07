@@ -10,37 +10,54 @@ class EducationArticleController extends Controller
 {
 
     /**
-     * Menampilkan daftar data.
+     * Menampilkan daftar artikel edukasi.
      *
-     * Endpoint ini mengembalikan semua record yang tersedia.
+     * Mengambil semua artikel edukasi yang tersedia untuk pengguna.
      */
-    public function index() { return $this->successResponse(EducationArticleResource::collection(EducationArticle::all())); }
+    public function index()
+    {
+        return $this->successResponse(EducationArticleResource::collection(EducationArticle::all()));
+    }
 
     /**
-     * Menambahkan data baru.
+     * Membuat artikel edukasi baru.
      *
-     * Endpoint ini digunakan untuk membuat record baru di database.
+     * Menambahkan artikel edukasi baru ke dalam sistem.
      */
-    public function store(StoreEducationArticleRequest $request) { return $this->successResponse(new EducationArticleResource(EducationArticle::create($request->validated()))); }
+    public function store(StoreEducationArticleRequest $request)
+    {
+        return $this->successResponse(new EducationArticleResource(EducationArticle::create($request->validated())));
+    }
 
     /**
-     * Menampilkan detail data.
+     * Menampilkan detail artikel.
      *
-     * Endpoint ini mengembalikan detail spesifik dari sebuah record berdasarkan ID.
+     * Mengambil isi lengkap dari sebuah artikel edukasi berdasarkan ID.
      */
-    public function show(EducationArticle $educationArticle) { return $this->successResponse(new EducationArticleResource($educationArticle)); }
+    public function show(EducationArticle $educationArticle)
+    {
+        return $this->successResponse(new EducationArticleResource($educationArticle));
+    }
 
     /**
-     * Memperbarui data.
+     * Memperbarui data artikel.
      *
-     * Endpoint ini digunakan untuk mengupdate record yang sudah ada di database.
+     * Mengubah informasi atau konten pada artikel yang sudah ada.
      */
-    public function update(UpdateEducationArticleRequest $request, EducationArticle $educationArticle) { $educationArticle->update($request->validated()); return $this->successResponse(new EducationArticleResource($educationArticle)); }
+    public function update(UpdateEducationArticleRequest $request, EducationArticle $educationArticle)
+    {
+        $educationArticle->update($request->validated());
+        return $this->successResponse(new EducationArticleResource($educationArticle));
+    }
 
     /**
-     * Menghapus data.
+     * Menghapus artikel.
      *
-     * Endpoint ini digunakan untuk menghapus record dari database secara permanen.
+     * Menghapus data artikel edukasi dari database secara permanen.
      */
-    public function destroy(EducationArticle $educationArticle) { $educationArticle->delete(); return $this->deletedResponse(); }
+    public function destroy(EducationArticle $educationArticle)
+    {
+        $educationArticle->delete();
+        return $this->deletedResponse();
+    }
 }

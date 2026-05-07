@@ -6,27 +6,38 @@ use Illuminate\Http\Request;
 class UserTermsAgreementController extends Controller {
 
     /**
-     * Menampilkan daftar data.
+     * Menampilkan daftar persetujuan syarat dan ketentuan.
      *
-     * Endpoint ini mengembalikan semua record yang tersedia.
+     * Mengambil semua data pengguna yang telah menyetujui versi T&C tertentu.
      */
-    public function index() { return $this->successResponse(UserTermsAgreement::all()); }
+    public function index()
+    {
+        return $this->successResponse(UserTermsAgreement::all());
+    }
 
     /**
-     * Menambahkan data baru.
+     * Mencatat persetujuan T&C baru.
      *
-     * Endpoint ini digunakan untuk membuat record baru di database.
+     * Menyimpan persetujuan pengguna terhadap syarat dan ketentuan aplikasi.
      */
-    public function store(Request $request) {
-        $validated = $request->validate(['user_id' => 'required|exists:users,id', 'version_id' => 'required|exists:term_versions,version_id', 'ip_address' => 'required|string']);
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'version_id' => 'required|exists:term_versions,version_id',
+            'ip_address' => 'required|string'
+        ]);
         $validated['agreed_at'] = now();
         return $this->successResponse(UserTermsAgreement::create($validated), 'Created', 201);
     }
 
     /**
-     * Menampilkan detail data.
+     * Menampilkan detail persetujuan.
      *
-     * Endpoint ini mengembalikan detail spesifik dari sebuah record berdasarkan ID.
+     * Mengambil informasi spesifik dari satu record persetujuan T&C berdasarkan ID.
      */
-    public function show(UserTermsAgreement $userTermsAgreement) { return $this->successResponse($userTermsAgreement); }
+    public function show(UserTermsAgreement $userTermsAgreement)
+    {
+        return $this->successResponse($userTermsAgreement);
+    }
 }

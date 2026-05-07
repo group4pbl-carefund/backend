@@ -10,37 +10,54 @@ class TermVersionController extends Controller
 {
 
     /**
-     * Menampilkan daftar data.
+     * Menampilkan daftar versi syarat dan ketentuan.
      *
-     * Endpoint ini mengembalikan semua record yang tersedia.
+     * Mengambil semua riwayat perubahan syarat dan ketentuan (T&C).
      */
-    public function index() { return $this->successResponse(TermVersionResource::collection(TermVersion::all())); }
+    public function index()
+    {
+        return $this->successResponse(TermVersionResource::collection(TermVersion::all()));
+    }
 
     /**
-     * Menambahkan data baru.
+     * Membuat versi T&C baru.
      *
-     * Endpoint ini digunakan untuk membuat record baru di database.
+     * Menambahkan versi baru untuk syarat dan ketentuan aplikasi.
      */
-    public function store(StoreTermVersionRequest $request) { return $this->successResponse(new TermVersionResource(TermVersion::create($request->validated()))); }
+    public function store(StoreTermVersionRequest $request)
+    {
+        return $this->successResponse(new TermVersionResource(TermVersion::create($request->validated())));
+    }
 
     /**
-     * Menampilkan detail data.
+     * Menampilkan detail versi T&C.
      *
-     * Endpoint ini mengembalikan detail spesifik dari sebuah record berdasarkan ID.
+     * Mengambil informasi lengkap dari satu versi syarat dan ketentuan berdasarkan ID.
      */
-    public function show(TermVersion $termVersion) { return $this->successResponse(new TermVersionResource($termVersion)); }
+    public function show(TermVersion $termVersion)
+    {
+        return $this->successResponse(new TermVersionResource($termVersion));
+    }
 
     /**
-     * Memperbarui data.
+     * Memperbarui data versi T&C.
      *
-     * Endpoint ini digunakan untuk mengupdate record yang sudah ada di database.
+     * Mengubah isi atau informasi pada versi syarat dan ketentuan yang sudah ada.
      */
-    public function update(UpdateTermVersionRequest $request, TermVersion $termVersion) { $termVersion->update($request->validated()); return $this->successResponse(new TermVersionResource($termVersion)); }
+    public function update(UpdateTermVersionRequest $request, TermVersion $termVersion)
+    {
+        $termVersion->update($request->validated());
+        return $this->successResponse(new TermVersionResource($termVersion));
+    }
 
     /**
-     * Menghapus data.
+     * Menghapus versi T&C.
      *
-     * Endpoint ini digunakan untuk menghapus record dari database secara permanen.
+     * Menghapus record versi syarat dan ketentuan dari database secara permanen.
      */
-    public function destroy(TermVersion $termVersion) { $termVersion->delete(); return $this->deletedResponse(); }
+    public function destroy(TermVersion $termVersion)
+    {
+        $termVersion->delete();
+        return $this->deletedResponse();
+    }
 }

@@ -18,9 +18,9 @@ class ProgramCategoryController extends Controller
     }
 
     /**
-     * Menampilkan daftar data.
+     * Menampilkan daftar kategori program.
      *
-     * Endpoint ini mengembalikan semua record yang tersedia.
+     * Mengambil semua jenis kategori yang tersedia untuk pengelompokan program.
      */
     public function index()
     {
@@ -28,9 +28,9 @@ class ProgramCategoryController extends Controller
     }
 
     /**
-     * Menambahkan data baru.
+     * Membuat kategori baru.
      *
-     * Endpoint ini digunakan untuk membuat record baru di database.
+     * Menambahkan jenis kategori baru ke dalam sistem.
      */
     public function store(StoreProgramCategoryRequest $request)
     {
@@ -40,9 +40,9 @@ class ProgramCategoryController extends Controller
     }
 
     /**
-     * Menampilkan detail data.
+     * Menampilkan detail kategori.
      *
-     * Endpoint ini mengembalikan detail spesifik dari sebuah record berdasarkan ID.
+     * Mengambil informasi lengkap dari sebuah kategori berdasarkan ID.
      */
     public function show(ProgramCategory $programCategory)
     {
@@ -50,9 +50,9 @@ class ProgramCategoryController extends Controller
     }
 
     /**
-     * Memperbarui data.
+     * Memperbarui data kategori.
      *
-     * Endpoint ini digunakan untuk mengupdate record yang sudah ada di database.
+     * Mengubah informasi pada kategori yang sudah ada.
      */
     public function update(UpdateProgramCategoryRequest $request, ProgramCategory $programCategory)
     {
@@ -62,9 +62,9 @@ class ProgramCategoryController extends Controller
     }
 
     /**
-     * Menghapus data.
+     * Menghapus kategori.
      *
-     * Endpoint ini digunakan untuk menghapus record dari database secara permanen.
+     * Menghapus data kategori dari database secara permanen.
      */
     public function destroy(ProgramCategory $programCategory)
     {

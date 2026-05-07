@@ -21,13 +21,9 @@ class DistributionController extends Controller
     }
 
     /**
-     * Menampilkan daftar distribusi.
-     */
-
-    /**
-     * Menampilkan daftar data.
+     * Menampilkan daftar semua distribusi dana.
      *
-     * Endpoint ini mengembalikan semua record yang tersedia.
+     * Mengambil riwayat penyaluran dana donasi ke penerima manfaat.
      */
     public function index()
     {
@@ -36,13 +32,9 @@ class DistributionController extends Controller
     }
 
     /**
-     * Menyimpan data distribusi baru.
-     */
-
-    /**
-     * Menambahkan data baru.
+     * Mencatat distribusi dana baru.
      *
-     * Endpoint ini digunakan untuk membuat record baru di database.
+     * Membuat record penyaluran dana untuk program tertentu.
      */
     public function store(StoreDistributionRequest $request): JsonResponse
     {

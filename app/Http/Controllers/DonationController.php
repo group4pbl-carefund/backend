@@ -18,9 +18,9 @@ class DonationController extends Controller
     }
 
     /**
-     * Menampilkan daftar data.
+     * Menampilkan daftar semua donasi.
      *
-     * Endpoint ini mengembalikan semua record yang tersedia.
+     * Mengambil riwayat donasi yang telah dilakukan oleh semua pengguna.
      */
     public function index()
     {
@@ -29,9 +29,9 @@ class DonationController extends Controller
     }
 
     /**
-     * Menambahkan data baru.
+     * Membuat donasi baru.
      *
-     * Endpoint ini digunakan untuk membuat record baru di database.
+     * Memproses transaksi donasi baru untuk program tertentu.
      */
     public function store(StoreDonationRequest $request): JsonResponse
     {

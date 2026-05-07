@@ -17,9 +17,9 @@ class DistributionUpdateController extends Controller
     }
 
     /**
-     * Menampilkan daftar data.
+     * Menampilkan semua pembaruan distribusi.
      *
-     * Endpoint ini mengembalikan semua record yang tersedia.
+     * Mengambil riwayat update progress penyaluran dana.
      */
     public function index()
     {
@@ -27,9 +27,9 @@ class DistributionUpdateController extends Controller
     }
 
     /**
-     * Menambahkan data baru.
+     * Membuat pembaruan distribusi baru.
      *
-     * Endpoint ini digunakan untuk membuat record baru di database.
+     * Menambahkan laporan progress baru untuk penyaluran dana tertentu.
      */
     public function store(StoreDistributionUpdateRequest $request): JsonResponse
     {

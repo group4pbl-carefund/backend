@@ -6,23 +6,33 @@ use Illuminate\Http\Request;
 class UserSessionController extends Controller {
 
     /**
-     * Menampilkan daftar data.
+     * Menampilkan daftar sesi pengguna.
      *
-     * Endpoint ini mengembalikan semua record yang tersedia.
+     * Mengambil semua riwayat sesi login pengguna yang aktif maupun yang sudah berakhir.
      */
-    public function index() { return $this->successResponse(UserSession::all()); }
+    public function index()
+    {
+        return $this->successResponse(UserSession::all());
+    }
 
     /**
-     * Menampilkan detail data.
+     * Menampilkan detail sesi.
      *
-     * Endpoint ini mengembalikan detail spesifik dari sebuah record berdasarkan ID.
+     * Mengambil informasi spesifik dari sebuah record sesi pengguna berdasarkan ID.
      */
-    public function show(UserSession $userSession) { return $this->successResponse($userSession); }
+    public function show(UserSession $userSession)
+    {
+        return $this->successResponse($userSession);
+    }
 
     /**
-     * Menghapus data.
+     * Menghapus sesi.
      *
-     * Endpoint ini digunakan untuk menghapus record dari database secara permanen.
+     * Menghapus record sesi pengguna dari database secara permanen.
      */
-    public function destroy(UserSession $userSession) { $userSession->delete(); return $this->deletedResponse(); }
+    public function destroy(UserSession $userSession)
+    {
+        $userSession->delete();
+        return $this->deletedResponse();
+    }
 }

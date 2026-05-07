@@ -18,9 +18,9 @@ class ProgramCampaignController extends Controller
     }
 
     /**
-     * Menampilkan daftar data.
+     * Menampilkan daftar kampanye program.
      *
-     * Endpoint ini mengembalikan semua record yang tersedia.
+     * Mengambil semua data kampanye yang sedang berjalan untuk program donasi.
      */
     public function index()
     {
@@ -28,9 +28,9 @@ class ProgramCampaignController extends Controller
     }
 
     /**
-     * Menambahkan data baru.
+     * Membuat kampanye baru.
      *
-     * Endpoint ini digunakan untuk membuat record baru di database.
+     * Mendaftarkan kampanye penggalangan dana baru untuk sebuah program.
      */
     public function store(StoreProgramCampaignRequest $request)
     {
@@ -39,9 +39,9 @@ class ProgramCampaignController extends Controller
     }
 
     /**
-     * Menampilkan detail data.
+     * Menampilkan detail kampanye.
      *
-     * Endpoint ini mengembalikan detail spesifik dari sebuah record berdasarkan ID.
+     * Mengambil informasi lengkap dari sebuah kampanye berdasarkan ID.
      */
     public function show(ProgramCampaign $programCampaign)
     {
@@ -49,9 +49,9 @@ class ProgramCampaignController extends Controller
     }
 
     /**
-     * Memperbarui data.
+     * Memperbarui data kampanye.
      *
-     * Endpoint ini digunakan untuk mengupdate record yang sudah ada di database.
+     * Mengubah detail informasi pada kampanye yang sudah ada.
      */
     public function update(UpdateProgramCampaignRequest $request, ProgramCampaign $programCampaign)
     {
@@ -60,9 +60,9 @@ class ProgramCampaignController extends Controller
     }
 
     /**
-     * Menghapus data.
+     * Menghapus kampanye.
      *
-     * Endpoint ini digunakan untuk menghapus record dari database secara permanen.
+     * Menghapus data kampanye dari database secara permanen.
      */
     public function destroy(ProgramCampaign $programCampaign)
     {

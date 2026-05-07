@@ -18,9 +18,9 @@ class ProgramCategoryMappingController extends Controller
     }
 
     /**
-     * Menampilkan daftar data.
+     * Menampilkan daftar pemetaan kategori program.
      *
-     * Endpoint ini mengembalikan semua record yang tersedia.
+     * Mengambil semua hubungan antara program dan kategorinya.
      */
     public function index()
     {
@@ -28,9 +28,9 @@ class ProgramCategoryMappingController extends Controller
     }
 
     /**
-     * Menambahkan data baru.
+     * Membuat pemetaan kategori baru.
      *
-     * Endpoint ini digunakan untuk membuat record baru di database.
+     * Menghubungkan sebuah program dengan kategori tertentu.
      */
     public function store(StoreProgramCategoryMappingRequest $request)
     {
@@ -39,9 +39,9 @@ class ProgramCategoryMappingController extends Controller
     }
 
     /**
-     * Menampilkan detail data.
+     * Menampilkan detail pemetaan.
      *
-     * Endpoint ini mengembalikan detail spesifik dari sebuah record berdasarkan ID.
+     * Mengambil informasi spesifik dari sebuah pemetaan kategori berdasarkan ID.
      */
     public function show(ProgramCategoryMapping $programCategoryMapping)
     {
@@ -49,9 +49,9 @@ class ProgramCategoryMappingController extends Controller
     }
 
     /**
-     * Memperbarui data.
+     * Memperbarui data pemetaan.
      *
-     * Endpoint ini digunakan untuk mengupdate record yang sudah ada di database.
+     * Mengubah hubungan pemetaan kategori yang sudah ada.
      */
     public function update(UpdateProgramCategoryMappingRequest $request, ProgramCategoryMapping $programCategoryMapping)
     {
@@ -60,9 +60,9 @@ class ProgramCategoryMappingController extends Controller
     }
 
     /**
-     * Menghapus data.
+     * Menghapus pemetaan.
      *
-     * Endpoint ini digunakan untuk menghapus record dari database secara permanen.
+     * Menghapus hubungan antara program dan kategori secara permanen.
      */
     public function destroy(ProgramCategoryMapping $programCategoryMapping)
     {
