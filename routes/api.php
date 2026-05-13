@@ -34,21 +34,29 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/me', [AuthController::class, 'me']);
     Route::post('/logout', [AuthController::class, 'logout']);
 
-    Route::apiResource('users', UserController::class);
     Route::apiResource('user-identities', UserIdentityController::class);
     Route::apiResource('user-sessions', UserSessionController::class)->only(['index', 'show', 'destroy']);
     Route::apiResource('user-terms-agreements', UserTermsAgreementController::class)->only(['index', 'store', 'show']);
-    Route::apiResource('term-versions', TermVersionController::class);
-    Route::apiResource('security-monitorings', SecurityMonitoringController::class)->only(['index', 'show']);
-    Route::apiResource('education-articles', EducationArticleController::class);
     Route::apiResource('education-views', EducationViewController::class)->only(['index', 'store', 'show']);
     Route::apiResource('programs', ProgramController::class);
     Route::apiResource('program-campaigns', ProgramCampaignController::class);
-    Route::apiResource('program-categories', ProgramCategoryController::class);
-    Route::apiResource('program-category-mappings', ProgramCategoryMappingController::class);
-
     Route::apiResource('donations', DonationController::class);
     Route::apiResource('distributions', DistributionController::class);
     Route::apiResource('payment-logs', PaymentLogController::class);
-    Route::apiResource('distribution-updates', DistributionUpdateController::class);
+
+    // Index accessible to all authenticated users
+    Route::get('distribution-updates', [DistributionUpdateController::class, 'index']);
+    Route::get('program-categories', [ProgramCategoryController::class, 'index']);
+    Route::get('program-category-mappings', [ProgramCategoryMappingController::class, 'index']);
+
+    Route::middleware('admin')->group(function () {
+        Route::apiResource('users', UserController::class);
+        Route::apiResource('term-versions', TermVersionController::class);
+        Route::apiResource('security-monitorings', SecurityMonitoringController::class)->only(['index', 'show']);
+        Route::apiResource('education-articles', EducationArticleController::class);
+        // Admin-only methods for these resources
+        Route::apiResource('distribution-updates', DistributionUpdateController::class)->except(['index']);
+        Route::apiResource('program-categories', ProgramCategoryController::class)->except(['index']);
+        Route::apiResource('program-category-mappings', ProgramCategoryMappingController::class)->except(['index']);
+    });
 });

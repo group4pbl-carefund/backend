@@ -30,6 +30,7 @@ class User extends Authenticatable
         'state',
         'country',
         'is_verified',
+        'role',
         'password',
         'email_verified_at',
     ];
