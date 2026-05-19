@@ -58,11 +58,20 @@ class AuthController extends Controller
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
+        // Catat sesi pertama pengguna saat registrasi agar perangkat ini langsung dipercaya
+        \App\Models\UserSession::create([
+            'user_id' => $user->id,
+            'token' => $token,
+            'user_agent' => $request->userAgent(),
+            'ip_address' => $request->ip(),
+            'login_at' => now(),
+            'expires_at' => now()->addDays(7),
+        ]);
+
         return $this->successResponse([
             'access_token' => $token, 
             'token_type' => 'Bearer', 
-            'user' => $user,
-            'otp_bypass_debug' => $otp
+            'user' => $user
         ], 'Registration successful', 201);
     }
 
@@ -76,6 +85,7 @@ class AuthController extends Controller
         $request->validate([
             'email' => 'required|string|email',
             'password' => 'required|string',
+            'otp_code' => 'nullable|string|size:6',
         ]);
 
         $user = User::where('email', $request->email)->first();
@@ -86,7 +96,90 @@ class AuthController extends Controller
             ]);
         }
 
+        $ipAddress = $request->ip();
+        $userAgent = $request->userAgent();
+
+        // 1. Cek apakah ini perangkat baru yang tidak dikenal
+        // Hanya lakukan cek jika user sudah punya session tersimpan sebelumnya
+        $hasAnySession = \App\Models\UserSession::where('user_id', $user->id)->exists();
+        $isKnownDevice = \App\Models\UserSession::where('user_id', $user->id)
+            ->where('ip_address', $ipAddress)
+            ->where('user_agent', $userAgent)
+            ->exists();
+
+        if ($hasAnySession && !$isKnownDevice) {
+            // Jika user mengirimkan kode OTP untuk verifikasi perangkat ini
+            if ($request->filled('otp_code')) {
+                if ($user->otp_code !== $request->otp_code) {
+                    return $this->errorResponse('Kode verifikasi OTP salah.', 400);
+                }
+
+                if (now()->greaterThan($user->otp_expires_at)) {
+                    return $this->errorResponse('Kode verifikasi OTP telah kedaluwarsa.', 400);
+                }
+
+                // Bersihkan kode OTP setelah sukses diverifikasi
+                $user->otp_code = null;
+                $user->otp_expires_at = null;
+                $user->save();
+
+                // Catat log kesuksesan verifikasi ke SecurityMonitoring
+                \App\Models\SecurityMonitoring::create([
+                    'event_type' => 'new_device_authorized',
+                    'severity' => 'info',
+                    'user_id' => $user->id,
+                    'ip_address' => $ipAddress,
+                    'user_agent' => $userAgent,
+                    'action' => 'authorize_device',
+                    'description' => 'Pengguna sukses memverifikasi login perangkat baru lewat OTP.',
+                    'details' => json_encode(['verified_at' => now()->toIso8601String()]),
+                ]);
+            } else {
+                // Belum mengirimkan OTP, kirimkan email verifikasi & minta OTP di frontend
+                $otp = str_pad(random_int(0, 999999), 6, '0', STR_PAD_LEFT);
+                $user->otp_code = $otp;
+                $user->otp_expires_at = now()->addMinutes(10);
+                $user->save();
+
+                // Catat log mencurigakan ke SecurityMonitoring
+                \App\Models\SecurityMonitoring::create([
+                    'event_type' => 'suspicious_login',
+                    'severity' => 'medium',
+                    'user_id' => $user->id,
+                    'ip_address' => $ipAddress,
+                    'user_agent' => $userAgent,
+                    'action' => 'require_otp',
+                    'description' => 'Percobaan login dari perangkat/browser baru terdeteksi.',
+                    'details' => json_encode(['requested_at' => now()->toIso8601String()]),
+                ]);
+
+                // Kirim email verifikasi perangkat baru
+                try {
+                    Mail::to($user->email)->send(new SendOTPMail($otp, $user->full_name));
+                } catch (\Exception $e) {
+                    \Illuminate\Support\Facades\Log::warning("Failed to send device verification email: " . $e->getMessage());
+                }
+
+                return response()->json([
+                    'success' => false,
+                    'requires_otp' => true,
+                    'message' => 'Login dari perangkat baru terdeteksi. Silakan masukkan kode OTP yang dikirim ke email Anda.'
+                ], 200);
+            }
+        }
+
+        // 2. Berhasil login (bisa dari perangkat dikenal, login pertama sekali, atau setelah verifikasi OTP sukses)
         $token = $user->createToken('auth_token')->plainTextToken;
+
+        // Catat sesi login ini agar dipercaya di kemudian hari
+        \App\Models\UserSession::create([
+            'user_id' => $user->id,
+            'token' => $token,
+            'user_agent' => $userAgent,
+            'ip_address' => $ipAddress,
+            'login_at' => now(),
+            'expires_at' => now()->addDays(7),
+        ]);
 
         return $this->successResponse(['access_token' => $token, 'token_type' => 'Bearer', 'user' => $user], 'Login successful');
     }
@@ -180,8 +273,6 @@ class AuthController extends Controller
             \Illuminate\Support\Facades\Log::warning("Failed to resend OTP email: " . $e->getMessage());
         }
 
-        return $this->successResponse([
-            'otp_bypass_debug' => $otp
-        ], 'Kode OTP baru telah dikirim!');
+        return $this->successResponse([], 'Kode OTP baru telah dikirim!');
     }
 }
