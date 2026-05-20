@@ -8,7 +8,7 @@ class PaymentLogService
 {
     public function getAll()
     {
-        return PaymentLog::latest()->get();
+        return PaymentLog::with('donation.user', 'donation.program')->latest()->get();
     }
 
     public function store(array $data)

@@ -6,13 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class PaymentLog extends Model
 {
-    protected $primaryKey = 'log_id';
-
     protected $fillable = [
         'donation_id',
-        'payment_method',
-        'payment_response',
-        'status'
+        'transaction_id',
+        'payment_type',
+        'raw_response'
+    ];
+
+    protected $casts = [
+        'raw_response' => 'array',
     ];
 
     public function donation()
