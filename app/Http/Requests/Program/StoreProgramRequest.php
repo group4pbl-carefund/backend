@@ -22,6 +22,12 @@ class StoreProgramRequest extends FormRequest
             'status' => 'required|string',
             'image_url' => 'nullable|string',
             'created_by' => 'required|exists:users,id',
+            'category' => 'nullable|string|max:100',
+            'recipient_name' => 'nullable|string|max:255',
+            'bank_name' => 'nullable|string|max:100',
+            'account_number' => 'nullable|string|max:50',
+            'account_owner' => 'nullable|string|max:255',
+            'rab_items' => 'nullable|array',
         ];
     }
 }

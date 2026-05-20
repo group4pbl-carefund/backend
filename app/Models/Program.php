@@ -17,7 +17,17 @@ class Program extends Model
         'end_date',
         'status',
         'image_url',
-        'created_by'
+        'created_by',
+        'category',
+        'recipient_name',
+        'bank_name',
+        'account_number',
+        'account_owner',
+        'rab_items'
+    ];
+
+    protected $casts = [
+        'rab_items' => 'array',
     ];
 
     public function donations()
