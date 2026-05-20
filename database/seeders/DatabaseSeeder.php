@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
             PaymentLogSeeder::class,
             EducationArticleSeeder::class,
             EducationViewSeeder::class,
+            UnapprovedCampaignSeeder::class,
         ]);
     }
 }

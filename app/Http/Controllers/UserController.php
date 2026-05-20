@@ -45,7 +45,15 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-        $updatedUser = $this->userService->updateUser($user, $request->validated());
+        $data = $request->validated();
+
+        if ($request->hasFile('avatar')) {
+            $path = $request->file('avatar')->store('avatars', 'public');
+            $data['avatar_url'] = '/storage/' . $path;
+            unset($data['avatar']); // Remove uploaded file object from data array
+        }
+
+        $updatedUser = $this->userService->updateUser($user, $data);
 
         return $this->updatedResponse(new UserResource($updatedUser), 'User updated successfully');
     }
