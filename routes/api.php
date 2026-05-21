@@ -51,13 +51,16 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('distribution-updates', [DistributionUpdateController::class, 'index']);
     Route::get('program-categories', [ProgramCategoryController::class, 'index']);
     Route::get('program-category-mappings', [ProgramCategoryMappingController::class, 'index']);
+    
+    // Allow all authenticated users to read education articles
+    Route::apiResource('education-articles', EducationArticleController::class)->only(['index', 'show']);
 
     Route::middleware('admin')->group(function () {
         Route::apiResource('users', UserController::class);
         Route::apiResource('term-versions', TermVersionController::class);
         Route::apiResource('security-monitorings', SecurityMonitoringController::class)->only(['index', 'show']);
-        Route::apiResource('education-articles', EducationArticleController::class);
         // Admin-only methods for these resources
+        Route::apiResource('education-articles', EducationArticleController::class)->except(['index', 'show']);
         Route::apiResource('distribution-updates', DistributionUpdateController::class)->except(['index']);
         Route::apiResource('program-categories', ProgramCategoryController::class)->except(['index']);
         Route::apiResource('program-category-mappings', ProgramCategoryMappingController::class)->except(['index']);

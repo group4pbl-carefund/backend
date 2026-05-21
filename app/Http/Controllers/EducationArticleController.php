@@ -34,8 +34,9 @@ class EducationArticleController extends Controller
      *
      * Mengambil isi lengkap dari sebuah artikel edukasi berdasarkan ID.
      */
-    public function show(EducationArticle $educationArticle)
+    public function show($id)
     {
+        $educationArticle = EducationArticle::findOrFail($id);
         return $this->successResponse(new EducationArticleResource($educationArticle));
     }
 
@@ -44,8 +45,10 @@ class EducationArticleController extends Controller
      *
      * Mengubah informasi atau konten pada artikel yang sudah ada.
      */
-    public function update(UpdateEducationArticleRequest $request, EducationArticle $educationArticle)
+    public function update(UpdateEducationArticleRequest $request, $id)
     {
+        $educationArticle = EducationArticle::findOrFail($id);
+        \Log::info('Update hit for article: ' . $educationArticle->article_id, $request->validated());
         $educationArticle->update($request->validated());
         return $this->successResponse(new EducationArticleResource($educationArticle));
     }
@@ -55,8 +58,9 @@ class EducationArticleController extends Controller
      *
      * Menghapus data artikel edukasi dari database secara permanen.
      */
-    public function destroy(EducationArticle $educationArticle)
+    public function destroy($id)
     {
+        $educationArticle = EducationArticle::findOrFail($id);
         $educationArticle->delete();
         return $this->deletedResponse();
     }
