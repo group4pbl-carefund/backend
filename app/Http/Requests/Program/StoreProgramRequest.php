@@ -28,6 +28,9 @@ class StoreProgramRequest extends FormRequest
             'account_number' => 'nullable|string|max:50',
             'account_owner' => 'nullable|string|max:255',
             'rab_items' => 'nullable|array',
+            'beneficiary_type' => 'nullable|string',
+            'documents' => 'nullable|array',
+            'admin_feedback' => 'nullable|string',
         ];
     }
 }

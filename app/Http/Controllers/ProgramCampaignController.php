@@ -7,6 +7,7 @@ use App\Http\Requests\ProgramCampaign\UpdateProgramCampaignRequest;
 use App\Http\Resources\ProgramCampaignResource;
 use App\Models\ProgramCampaign;
 use App\Services\ProgramCampaignService;
+use Illuminate\Http\Request;
 
 class ProgramCampaignController extends Controller
 {
@@ -22,9 +23,10 @@ class ProgramCampaignController extends Controller
      *
      * Mengambil semua data kampanye yang sedang berjalan untuk program donasi.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return $this->successResponse(ProgramCampaignResource::collection($this->campaignService->getAllCampaigns()));
+        $userId = $request->query('user_id');
+        return $this->successResponse(ProgramCampaignResource::collection($this->campaignService->getAllCampaigns($userId)));
     }
 
     /**
@@ -68,5 +70,16 @@ class ProgramCampaignController extends Controller
     {
         $this->campaignService->deleteCampaign($programCampaign);
         return $this->deletedResponse();
+    }
+
+    /**
+     * Memperpanjang durasi kampanye.
+     *
+     * Menambahkan 7 hari ke end_date program terkait.
+     */
+    public function extend(ProgramCampaign $programCampaign)
+    {
+        $updatedCampaign = $this->campaignService->extendCampaign($programCampaign);
+        return $this->successResponse(new ProgramCampaignResource($updatedCampaign));
     }
 }

@@ -22,6 +22,9 @@ class UpdateProgramRequest extends FormRequest
             'status' => 'sometimes|string',
             'image_url' => 'nullable|string',
             'created_by' => 'sometimes|exists:users,id',
+            'admin_feedback' => 'nullable|string',
+            'beneficiary_type' => 'nullable|string',
+            'documents' => 'nullable|array',
         ];
     }
 }

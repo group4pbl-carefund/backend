@@ -7,10 +7,17 @@ use Illuminate\Database\Eloquent\Collection;
 
 class ProgramCampaignService
 {
-    public function getAllCampaigns(): Collection
+    public function getAllCampaigns(?int $userId = null): Collection
     {
-        // Menggunakan eager loading agar performa database lebih ringan
-        return ProgramCampaign::with('program')->get();
+        $query = ProgramCampaign::with('program');
+
+        if ($userId) {
+            $query->whereHas('program', function ($q) use ($userId) {
+                $q->where('created_by', $userId);
+            });
+        }
+
+        return $query->get();
     }
 
     public function createCampaign(array $data): ProgramCampaign
@@ -42,5 +49,17 @@ class ProgramCampaignService
         $campaign->increment('donor_count', 1);
 
         return $campaign->fresh();
+    }
+
+    public function extendCampaign(ProgramCampaign $campaign): ProgramCampaign
+    {
+        $program = $campaign->program;
+        if ($program && $program->end_date) {
+            $endDate = new \Carbon\Carbon($program->end_date);
+            $program->end_date = $endDate->addDays(7)->toDateString();
+            $program->save();
+        }
+        
+        return $campaign->fresh('program');
     }
 }

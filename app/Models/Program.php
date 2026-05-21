@@ -20,6 +20,9 @@ class Program extends Model
         'created_by',
         'category',
         'recipient_name',
+        'beneficiary_type',
+        'documents',
+        'admin_feedback',
         'bank_name',
         'account_number',
         'account_owner',
@@ -28,6 +31,7 @@ class Program extends Model
 
     protected $casts = [
         'rab_items' => 'array',
+        'documents' => 'array',
     ];
 
     public function donations()

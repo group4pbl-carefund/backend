@@ -41,6 +41,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('user-terms-agreements', UserTermsAgreementController::class)->only(['index', 'store', 'show']);
     Route::apiResource('education-views', EducationViewController::class)->only(['index', 'store', 'show']);
     Route::apiResource('programs', ProgramController::class);
+    Route::post('program-campaigns/{programCampaign}/extend', [ProgramCampaignController::class, 'extend']);
     Route::apiResource('program-campaigns', ProgramCampaignController::class);
     Route::apiResource('donations', DonationController::class);
     Route::apiResource('distributions', DistributionController::class);
