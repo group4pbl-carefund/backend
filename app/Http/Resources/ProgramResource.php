@@ -18,6 +18,7 @@ class ProgramResource extends JsonResource
             'program_id' => $this->program_id,
 
             'program_name' => $this->program_name,
+            'category' => $this->category,
             'description' => $this->description,
             'target_amount' => $this->target_amount,
             'start_date' => $this->start_date,

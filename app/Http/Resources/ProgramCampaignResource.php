@@ -22,6 +22,7 @@ class ProgramCampaignResource extends JsonResource
             'donor_count'       => $this->donor_count,
             'last_update_date'  => $this->last_update_date,
             'created_at'        => $this->created_at,
+            'program'           => new ProgramResource($this->whenLoaded('program')),
         ];
     }
 }

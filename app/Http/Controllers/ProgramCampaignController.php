@@ -47,7 +47,7 @@ class ProgramCampaignController extends Controller
      */
     public function show(ProgramCampaign $programCampaign)
     {
-        return $this->successResponse(new ProgramCampaignResource($programCampaign));
+        return $this->successResponse(new ProgramCampaignResource($programCampaign->load('program')));
     }
 
     /**
