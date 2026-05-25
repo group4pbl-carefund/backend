@@ -23,4 +23,9 @@ class EducationArticle extends Model
     {
         return $this->belongsTo(User::class, 'author_id');
     }
+
+    public function views()
+    {
+        return $this->hasMany(EducationView::class, 'article_id', 'article_id');
+    }
 }

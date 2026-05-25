@@ -16,7 +16,7 @@ class EducationArticleController extends Controller
      */
     public function index()
     {
-        return $this->successResponse(EducationArticleResource::collection(EducationArticle::all()));
+        return $this->successResponse(EducationArticleResource::collection(EducationArticle::with('author')->withCount('views')->get()));
     }
 
     /**
@@ -36,7 +36,7 @@ class EducationArticleController extends Controller
      */
     public function show($id)
     {
-        $educationArticle = EducationArticle::findOrFail($id);
+        $educationArticle = EducationArticle::with('author')->withCount('views')->findOrFail($id);
         return $this->successResponse(new EducationArticleResource($educationArticle));
     }
 

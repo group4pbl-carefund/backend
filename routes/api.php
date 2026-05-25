@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DistributionController;
 use App\Http\Controllers\DistributionUpdateController;
 use App\Http\Controllers\DonationController;
@@ -27,6 +28,8 @@ Route::get('/health', function () {
     ]);
 });
 
+Route::get('/public-stats', [App\Http\Controllers\DashboardController::class, 'publicStats']);
+
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/verify-otp', [AuthController::class, 'verifyOtp']);
@@ -42,6 +45,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('user-sessions', UserSessionController::class)->only(['index', 'show', 'destroy']);
     Route::apiResource('user-terms-agreements', UserTermsAgreementController::class)->only(['index', 'store', 'show']);
     Route::apiResource('education-views', EducationViewController::class)->only(['index', 'store', 'show']);
+    
+    // Dashboard route
+    Route::get('/dashboard', [DashboardController::class, 'index']);
+    
     Route::apiResource('programs', ProgramController::class);
     Route::post('program-campaigns/{programCampaign}/extend', [ProgramCampaignController::class, 'extend']);
     Route::apiResource('program-campaigns', ProgramCampaignController::class);
@@ -57,9 +64,12 @@ Route::middleware('auth:sanctum')->group(function () {
     // Allow all authenticated users to read education articles
     Route::apiResource('education-articles', EducationArticleController::class)->only(['index', 'show']);
 
+    // Allow all authenticated users to read term versions
+    Route::apiResource('term-versions', TermVersionController::class)->only(['index', 'show']);
+
     Route::middleware('admin')->group(function () {
         Route::apiResource('users', UserController::class);
-        Route::apiResource('term-versions', TermVersionController::class);
+        Route::apiResource('term-versions', TermVersionController::class)->except(['index', 'show']);
         Route::apiResource('security-monitorings', SecurityMonitoringController::class)->only(['index', 'show']);
         // Admin-only methods for these resources
         Route::apiResource('education-articles', EducationArticleController::class)->except(['index', 'show']);

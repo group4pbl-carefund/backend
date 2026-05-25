@@ -12,7 +12,7 @@ class UserTermsAgreementController extends Controller {
      */
     public function index()
     {
-        return $this->successResponse(UserTermsAgreement::all());
+        return $this->successResponse(UserTermsAgreement::with(['user', 'version'])->get());
     }
 
     /**
