@@ -17,7 +17,7 @@ class ProgramController extends Controller
      */
     public function index()
     {
-        return $this->successResponse(ProgramResource::collection(Program::all()));
+        return $this->successResponse(ProgramResource::collection(Program::with('user')->get()));
     }
 
     /**
@@ -27,7 +27,16 @@ class ProgramController extends Controller
      */
     public function store(StoreProgramRequest $request)
     {
-        return $this->successResponse(new ProgramResource(Program::create($request->validated())));
+        $program = Program::create($request->validated());
+
+        \App\Models\ProgramCampaign::create([
+            'program_id' => $program->program_id,
+            'current_amount' => 0,
+            'available_balance' => 0,
+            'donor_count' => 0
+        ]);
+
+        return $this->successResponse(new ProgramResource($program));
     }
 
     /**
