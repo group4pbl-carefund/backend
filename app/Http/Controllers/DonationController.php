@@ -35,8 +35,35 @@ class DonationController extends Controller
      */
     public function store(StoreDonationRequest $request): JsonResponse
     {
-        $donation = $this->donationService->store($request->validated());
+        $data = $request->validated();
+        $data['user_id'] = $request->user()->id; // Auto assign authenticated user
+
+        $donation = $this->donationService->store($data);
         
         return $this->successResponse(new DonationResource($donation), 'Donasi berhasil diproses', 201);
+    }
+
+    /**
+     * Menyelesaikan donasi.
+     *
+     * Mengubah status pembayaran menjadi completed dan menambahkan progress ke kampanye.
+     */
+    public function complete(\App\Models\Donation $donation, \App\Services\ProgramCampaignService $campaignService): JsonResponse
+    {
+        if ($donation->payment_status === 'completed') {
+            return $this->successResponse(new DonationResource($donation), 'Donasi sudah selesai');
+        }
+
+        $donation->update([
+            'payment_status' => 'completed',
+            'paid_at' => now(),
+        ]);
+
+        $campaign = \App\Models\ProgramCampaign::where('program_id', $donation->program_id)->first();
+        if ($campaign) {
+            $campaignService->recordSuccessfulDonation($campaign, $donation->amount);
+        }
+
+        return $this->successResponse(new DonationResource($donation), 'Donasi berhasil diselesaikan');
     }
 }

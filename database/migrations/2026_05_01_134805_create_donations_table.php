@@ -13,11 +13,22 @@ return new class extends Migration
     {
         Schema::create('donations', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_donatur');
-            $table->decimal('nominal', 15, 2);
-            $table->string('metode_pembayaran');
-            $table->text('pesan')->nullable();
-            $table->enum('status', ['pending', 'success', 'failed'])->default('pending');
+            $table->foreignId('user_id')->nullable()->constrained('users')->nullOnDelete();
+            $table->unsignedBigInteger('program_id');
+            $table->foreign('program_id')->references('program_id')->on('programs')->cascadeOnDelete();
+            
+            $table->decimal('amount', 15, 2);
+            $table->decimal('fee_amount', 15, 2)->default(0);
+            $table->decimal('total_amount', 15, 2)->default(0);
+            
+            $table->string('payment_method');
+            $table->enum('payment_status', ['pending', 'completed', 'failed'])->default('pending');
+            $table->boolean('is_anonymous')->default(false);
+            $table->string('transaction_id')->nullable();
+            $table->string('proof_url')->nullable();
+            $table->string('certificate_url')->nullable();
+            $table->text('notes')->nullable();
+            $table->timestamp('paid_at')->nullable();
             $table->timestamps();
         });
     }

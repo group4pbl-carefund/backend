@@ -15,7 +15,7 @@ class StoreDonationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'program_id'     => 'required|exists:programs,id',
+            'program_id'     => 'required|exists:programs,program_id',
             'amount'         => 'required|numeric|min:1000',
             'payment_method' => 'required|string',
             'is_anonymous'   => 'boolean',

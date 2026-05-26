@@ -51,8 +51,10 @@ Route::middleware('auth:sanctum')->group(function () {
     
     Route::apiResource('programs', ProgramController::class);
     Route::post('program-campaigns/{programCampaign}/extend', [ProgramCampaignController::class, 'extend']);
+    Route::get('program-campaigns/{programCampaign}/donors', [ProgramCampaignController::class, 'donors']);
     Route::apiResource('program-campaigns', ProgramCampaignController::class);
-    Route::apiResource('donations', DonationController::class);
+    Route::patch('donations/{donation}/complete', [\App\Http\Controllers\DonationController::class, 'complete']);
+    Route::apiResource('donations', \App\Http\Controllers\DonationController::class);
     Route::apiResource('distributions', DistributionController::class);
     Route::apiResource('payment-logs', PaymentLogController::class);
 

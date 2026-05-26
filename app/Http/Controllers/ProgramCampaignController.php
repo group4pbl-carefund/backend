@@ -82,4 +82,27 @@ class ProgramCampaignController extends Controller
         $updatedCampaign = $this->campaignService->extendCampaign($programCampaign);
         return $this->successResponse(new ProgramCampaignResource($updatedCampaign));
     }
+
+    /**
+     * Menampilkan daftar donatur untuk kampanye tertentu.
+     */
+    public function donors(ProgramCampaign $programCampaign)
+    {
+        $donations = \App\Models\Donation::with('user')
+            ->where('program_id', $programCampaign->program_id)
+            ->where('payment_status', 'completed')
+            ->orderBy('paid_at', 'desc')
+            ->get();
+            
+        $donors = $donations->map(function ($donation) {
+            return [
+                'name' => $donation->is_anonymous ? 'Hamba Allah' : ($donation->user->full_name ?? 'Anonim'),
+                'amount' => $donation->amount,
+                'comment' => $donation->notes,
+                'date' => $donation->paid_at ? $donation->paid_at->diffForHumans() : 'Baru saja'
+            ];
+        });
+
+        return $this->successResponse($donors);
+    }
 }

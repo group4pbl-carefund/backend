@@ -10,7 +10,7 @@ class PaymentLogSeeder extends Seeder
 {
     public function run(): void
     {
-        $donations = Donation::where('status', 'success')->get();
+        $donations = Donation::where('payment_status', 'completed')->get();
 
         $paymentLogs = [
             [
