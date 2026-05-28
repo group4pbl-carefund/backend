@@ -14,6 +14,7 @@ class StoreEducationArticleRequest extends FormRequest
             'author_id' => 'required|exists:users,id',
             'status' => 'required|string',
             'published_at' => 'date|nullable',
+            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg|max:5120',
         ];
     }
 }

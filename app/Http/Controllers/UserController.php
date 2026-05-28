@@ -98,6 +98,22 @@ class UserController extends Controller
     }
 
     /**
+     * Upload gambar untuk TinyMCE editor.
+     */
+    public function uploadEditorImage(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|image|mimes:jpeg,png,jpg,gif|max:10240',
+        ]);
+
+        $path = $request->file('file')->store('editor', 'public');
+
+        return response()->json([
+            'location' => asset('/storage/' . $path),
+        ]);
+    }
+
+    /**
      * Menghapus pengguna.
      *
      * Menghapus record pengguna dari database secara permanen.

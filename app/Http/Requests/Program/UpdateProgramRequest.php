@@ -20,6 +20,7 @@ class UpdateProgramRequest extends FormRequest
             'start_date' => 'sometimes|date',
             'end_date' => 'sometimes|date|after_or_equal:start_date',
             'status' => 'sometimes|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:5120',
             'image_url' => 'nullable|string',
             'created_by' => 'sometimes|exists:users,id',
             'admin_feedback' => 'nullable|string',

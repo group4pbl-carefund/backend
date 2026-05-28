@@ -26,7 +26,14 @@ class EducationArticleController extends Controller
      */
     public function store(StoreEducationArticleRequest $request)
     {
-        return $this->successResponse(new EducationArticleResource(EducationArticle::create($request->validated())));
+        $data = $request->validated();
+
+        if ($request->hasFile('thumbnail')) {
+            $path = $request->file('thumbnail')->store('articles', 'public');
+            $data['thumbnail_url'] = '/storage/' . $path;
+        }
+
+        return $this->successResponse(new EducationArticleResource(EducationArticle::create($data)));
     }
 
     /**
@@ -48,8 +55,14 @@ class EducationArticleController extends Controller
     public function update(UpdateEducationArticleRequest $request, $id)
     {
         $educationArticle = EducationArticle::findOrFail($id);
-        \Log::info('Update hit for article: ' . $educationArticle->article_id, $request->validated());
-        $educationArticle->update($request->validated());
+        $data = $request->validated();
+
+        if ($request->hasFile('thumbnail')) {
+            $path = $request->file('thumbnail')->store('articles', 'public');
+            $data['thumbnail_url'] = '/storage/' . $path;
+        }
+
+        $educationArticle->update($data);
         return $this->successResponse(new EducationArticleResource($educationArticle));
     }
 

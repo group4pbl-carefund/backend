@@ -13,6 +13,7 @@ class UpdateEducationArticleRequest extends FormRequest
             'category' => 'string|nullable',
             'status' => 'string|nullable',
             'published_at' => 'date|nullable',
+            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg|max:5120',
         ];
     }
 }

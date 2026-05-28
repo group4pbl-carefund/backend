@@ -26,7 +26,14 @@ class UserIdentityController extends Controller
      */
     public function store(StoreUserIdentityRequest $request)
     {
-        return $this->successResponse(new UserIdentityResource(UserIdentity::create($request->validated())));
+        $data = $request->validated();
+
+        if ($request->hasFile('identity_image')) {
+            $path = $request->file('identity_image')->store('identities', 'public');
+            $data['identity_image'] = '/storage/' . $path;
+        }
+
+        return $this->successResponse(new UserIdentityResource(UserIdentity::create($data)));
     }
 
     /**

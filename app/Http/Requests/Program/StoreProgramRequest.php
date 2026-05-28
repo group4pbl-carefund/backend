@@ -20,6 +20,7 @@ class StoreProgramRequest extends FormRequest
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
             'status' => 'required|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:5120',
             'image_url' => 'nullable|string',
             'created_by' => 'required|exists:users,id',
             'category' => 'nullable|string|max:100',

@@ -27,7 +27,14 @@ class ProgramController extends Controller
      */
     public function store(StoreProgramRequest $request)
     {
-        $program = Program::create($request->validated());
+        $data = $request->validated();
+
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('programs', 'public');
+            $data['image_url'] = '/storage/' . $path;
+        }
+
+        $program = Program::create($data);
 
         \App\Models\ProgramCampaign::create([
             'program_id' => $program->program_id,
@@ -56,7 +63,14 @@ class ProgramController extends Controller
      */
     public function update(UpdateProgramRequest $request, Program $program)
     {
-        $program->update($request->validated());
+        $data = $request->validated();
+
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('programs', 'public');
+            $data['image_url'] = '/storage/' . $path;
+        }
+
+        $program->update($data);
 
         return $this->successResponse(new ProgramResource($program));
     }

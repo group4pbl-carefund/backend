@@ -49,6 +49,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // Dashboard route
     Route::post('/profile/avatar', [UserController::class, 'updateAvatar']);
     Route::patch('/profile', [UserController::class, 'updateProfile']);
+    Route::post('/upload-editor-image', [\App\Http\Controllers\UserController::class, 'uploadEditorImage']);
     
     Route::get('/dashboard', [DashboardController::class, 'index']);
     
