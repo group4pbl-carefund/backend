@@ -59,6 +59,45 @@ class UserController extends Controller
     }
 
     /**
+     * Update profil pengguna yang sedang login.
+     */
+    public function updateProfile(Request $request)
+    {
+        $user = $request->user();
+        $data = $request->validate([
+            'full_name' => 'sometimes|string|max:255',
+            'phone' => 'nullable|string|max:20',
+            'city' => 'nullable|string|max:100',
+            'state' => 'nullable|string|max:100',
+            'country' => 'nullable|string|max:100',
+            'address' => 'nullable|string',
+        ]);
+
+        $updatedUser = $this->userService->updateUser($user, $data);
+        return $this->updatedResponse(new UserResource($updatedUser), 'Profile updated');
+    }
+
+    /**
+     * Upload avatar untuk pengguna yang sedang login.
+     */
+    public function updateAvatar(Request $request)
+    {
+        $request->validate([
+            'avatar' => 'required|image|mimes:jpeg,png,jpg,gif|max:5120',
+        ]);
+
+        $user = $request->user();
+
+        if ($request->hasFile('avatar')) {
+            $path = $request->file('avatar')->store('avatars', 'public');
+            $user->avatar_url = '/storage/' . $path;
+            $user->save();
+        }
+
+        return $this->updatedResponse(new UserResource($user), 'Avatar updated');
+    }
+
+    /**
      * Menghapus pengguna.
      *
      * Menghapus record pengguna dari database secara permanen.

@@ -26,6 +26,7 @@ class UserResource extends JsonResource
             'state' => $this->state,
             'country' => $this->country,
             'is_verified' => $this->is_verified,
+            'avatar_url' => $this->avatar_url,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

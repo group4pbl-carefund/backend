@@ -47,6 +47,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('education-views', EducationViewController::class)->only(['index', 'store', 'show']);
     
     // Dashboard route
+    Route::post('/profile/avatar', [UserController::class, 'updateAvatar']);
+    Route::patch('/profile', [UserController::class, 'updateProfile']);
+    
     Route::get('/dashboard', [DashboardController::class, 'index']);
     
     Route::apiResource('programs', ProgramController::class);
