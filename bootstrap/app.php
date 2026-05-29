@@ -18,7 +18,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $middleware->api(prepend: [
             \Illuminate\Http\Middleware\HandleCors::class,
-            \Illuminate\Http\Middleware\MethodOverrideMiddleware::class,
+            // \Illuminate\Http\Middleware\MethodOverrideMiddleware::class,
         ]);
 
         $middleware->statefulApi();

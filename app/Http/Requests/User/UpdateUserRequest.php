@@ -27,6 +27,7 @@ class UpdateUserRequest extends FormRequest
             'state' => 'nullable|string|max:100',
             'country' => 'nullable|string|max:100',
             'is_verified' => 'sometimes|boolean',
+            'role' => 'sometimes|string|in:admin,user',
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
         ];
     }

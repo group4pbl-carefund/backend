@@ -26,7 +26,9 @@ class UserResource extends JsonResource
             'state' => $this->state,
             'country' => $this->country,
             'is_verified' => $this->is_verified,
+            'role' => $this->role,
             'avatar_url' => $this->avatar_url,
+            'identities' => $this->whenLoaded('identities'),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

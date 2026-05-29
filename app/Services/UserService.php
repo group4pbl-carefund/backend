@@ -8,7 +8,7 @@ class UserService
 {
     public function getAllUsers()
     {
-        return User::paginate(10);
+        return User::with('identities')->orderBy('created_at', 'desc')->paginate(10);
     }
 
     public function updateUser(User $user, array $data)

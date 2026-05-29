@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Donation;
 use App\Models\Program;
+use App\Models\ProgramCampaign;
 use App\Models\Distribution;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -12,16 +13,40 @@ use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
+    private function calculatePenerimaManfaat()
+    {
+        $activeCampaigns = ProgramCampaign::with('program')
+            ->whereHas('program', function($query) {
+                $query->whereIn('status', ['ACTIVE', 'COMPLETED', 'active', 'completed']);
+            })->get();
+
+        $total = 0;
+        foreach ($activeCampaigns as $campaign) {
+            $type = strtolower($campaign->program->beneficiary_type ?? 'lembaga');
+            $amount = $campaign->current_amount ?? 0;
+
+            if (in_array($type, ['diri sendiri', 'self', 'orang lain', 'others', 'individu', 'personal'])) {
+                $total += 1;
+            } elseif (in_array($type, ['keluarga', 'family'])) {
+                $total += 4; // Estimasi rata-rata anggota keluarga
+            } else {
+                // Yayasan/Lembaga/Bencana Alam/Umum
+                $total += ceil($amount / 200000); // Rp 200.000 per orang
+            }
+        }
+
+        return $total;
+    }
+
     public function index()
     {
         // 1. Stats
-        $totalDana = Donation::where('payment_status', 'completed')->sum('amount');
-        if ($totalDana == 0) {
-            $totalDana = Donation::sum('amount');
-        }
+        $totalDana = ProgramCampaign::whereHas('program', function($query) {
+            $query->whereIn('status', ['ACTIVE', 'COMPLETED', 'active', 'completed']);
+        })->sum('current_amount');
 
-        $penerimaManfaat = User::count() * 15;
-        $programAktif = Program::where('status', 'active')->count();
+        $penerimaManfaat = $this->calculatePenerimaManfaat();
+        $programAktif = Program::where('status', 'ACTIVE')->count();
         if ($programAktif == 0) $programAktif = Program::count();
 
         $distribusiSelesai = Distribution::where('status', 'COMPLETED')->count();
@@ -36,6 +61,7 @@ class DashboardController extends Controller
             
             $sum = Donation::whereYear('created_at', $month->year)
                 ->whereMonth('created_at', $month->month)
+                ->whereIn('payment_status', ['PAID', 'SUCCESS', 'completed', 'COMPLETED'])
                 ->sum('amount');
             $trendData[] = $sum;
         }
@@ -121,12 +147,11 @@ class DashboardController extends Controller
 
     public function publicStats()
     {
-        $totalDana = Donation::where('payment_status', 'completed')->sum('amount');
-        if ($totalDana == 0) {
-            $totalDana = Donation::sum('amount');
-        }
+        $totalDana = ProgramCampaign::whereHas('program', function($query) {
+            $query->whereIn('status', ['ACTIVE', 'COMPLETED', 'active', 'completed']);
+        })->sum('current_amount');
 
-        $penerimaManfaat = User::count() * 15;
+        $penerimaManfaat = $this->calculatePenerimaManfaat();
         $donaturAktif = User::count(); // Estimasi dari total user terdaftar
 
         // Format angka (misal: 2 Miliar+, 10.000+)
