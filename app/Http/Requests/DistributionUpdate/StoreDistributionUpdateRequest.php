@@ -15,9 +15,10 @@ class StoreDistributionUpdateRequest extends FormRequest
     {
         return [
             'distribution_id' => 'required|exists:distributions,id',
-            'title'           => 'required|string|max:255',
-            'content'         => 'required|string',
-            'image_url'       => 'nullable|url',
+            'status'          => 'required|string|max:50',
+            'notes'           => 'nullable|string',
+            'proof_url'       => 'nullable|url',
+            'updated_by'      => 'nullable|exists:users,id',
         ];
     }
 }

@@ -19,7 +19,8 @@ class Donation extends Model
         'transaction_id',
         'proof_url',
         'certificate_url',
-        'paid_at'
+        'paid_at',
+        'notes'
     ];
 
     public function program(): BelongsTo

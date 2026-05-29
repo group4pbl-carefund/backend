@@ -29,8 +29,8 @@ class PaymentLogResource extends JsonResource
                     'email'     => $this->donation->user->email,
                 ] : null,
                 'program'        => $this->donation->program ? [
-                    'id'    => $this->donation->program->id,
-                    'title' => $this->donation->program->title,
+                    'id'           => $this->donation->program->program_id,
+                    'program_name' => $this->donation->program->program_name,
                 ] : null,
             ] : null,
         ];

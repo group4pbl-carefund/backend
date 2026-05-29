@@ -15,12 +15,12 @@ class DistributionResource extends JsonResource
         return [
             'id'               => $this->id,
             'program_id'       => $this->program_id,
-            'program_name'     => $this->program->name ?? 'Program Tidak Ditemukan',
+            'program_name'     => $this->program?->program_name ?? 'Program Tidak Ditemukan',
             'amount'           => (int) $this->amount,
             'formatted_amount' => 'Rp ' . number_format($this->amount, 0, ',', '.'),
             'status'           => $this->status,
             'notes'            => $this->notes,
-            'created_at'       => $this->created_at->format('d M Y H:i'),
+            'created_at'       => $this->created_at?->format('d M Y H:i'),
         ];
     }
 }

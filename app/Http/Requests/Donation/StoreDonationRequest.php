@@ -16,7 +16,7 @@ class StoreDonationRequest extends FormRequest
     {
         return [
             'program_id'     => 'required|exists:programs,program_id',
-            'amount'         => 'required|numeric|min:1000',
+            'amount'         => 'required|numeric|min:10000',
             'payment_method' => 'required|string',
             'is_anonymous'   => 'boolean',
             'notes'          => 'nullable|string',

@@ -6,24 +6,22 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('distributions', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_penerima');
-            $table->decimal('jumlah_penyaluran', 15, 2);
-            $table->date('tanggal_penyaluran');
-            $table->text('keterangan');
+            $table->foreignId('program_id')->constrained('programs', 'program_id')->onDelete('cascade');
+            $table->string('recipient_name');
+            $table->string('recipient_location')->nullable();
+            $table->decimal('amount', 15, 2);
+            $table->string('status')->default('PROSES');
+            $table->string('evidence_url')->nullable();
+            $table->text('notes')->nullable();
+            $table->foreignId('created_by')->nullable()->constrained('users')->onDelete('set null');
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('distributions');

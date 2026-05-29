@@ -20,10 +20,13 @@ class StoreDistributionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'program_id' => 'required|exists:programs,id',
-            'amount'     => 'required|numeric|min:0',
-            'status'     => 'required|string|max:50',
-            'notes'      => 'nullable|string',
+            'program_id'       => 'required|exists:programs,program_id',
+            'recipient_name'   => 'required|string|max:255',
+            'recipient_location' => 'nullable|string|max:255',
+            'amount'           => 'required|numeric|min:0',
+            'status'           => 'required|string|max:50',
+            'evidence_url'     => 'nullable|url',
+            'notes'            => 'nullable|string',
         ];
     }
 }

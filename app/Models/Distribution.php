@@ -6,8 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Distribution extends Model
 {
-    protected $primaryKey = 'distribution_id';
-
     protected $fillable = [
         'program_id',
         'recipient_name',

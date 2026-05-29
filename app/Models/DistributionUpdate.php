@@ -6,8 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class DistributionUpdate extends Model
 {
-    protected $primaryKey = 'update_id';
-
     protected $fillable = [
         'distribution_id',
         'status',
@@ -18,7 +16,7 @@ class DistributionUpdate extends Model
 
     public function distribution()
     {
-        return $this->belongsTo(Distribution::class, 'distribution_id');
+        return $this->belongsTo(Distribution::class, 'distribution_id', 'id');
     }
 
     public function updatedBy()

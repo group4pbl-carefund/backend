@@ -12,10 +12,10 @@ class DistributionUpdateResource extends JsonResource
         return [
             'id'              => $this->id,
             'distribution_id' => $this->distribution_id,
-            'title'           => $this->title,
-            'content'         => $this->content,
-            'image'           => $this->image_url,
-            'updated_at'      => $this->created_at->format('d M Y H:i'),
+            'status'          => $this->status,
+            'notes'           => $this->notes,
+            'proof_url'       => $this->proof_url,
+            'created_at'      => $this->created_at?->format('d M Y H:i'),
         ];
     }
 }

@@ -15,16 +15,16 @@ class DashboardController extends Controller
     public function index()
     {
         // 1. Stats
-        $totalDana = Donation::where('payment_status', 'PAID')->orWhere('payment_status', 'SUCCESS')->sum('amount');
+        $totalDana = Donation::where('payment_status', 'completed')->sum('amount');
         if ($totalDana == 0) {
             $totalDana = Donation::sum('amount');
         }
 
-        $penerimaManfaat = User::count() * 15; // Estimasi penerima manfaat (dummy logic if no explicit data)
-        $programAktif = Program::where('status', 'ACTIVE')->count();
+        $penerimaManfaat = User::count() * 15;
+        $programAktif = Program::where('status', 'active')->count();
         if ($programAktif == 0) $programAktif = Program::count();
 
-        $distribusiSelesai = Distribution::where('status', 'SELESAI')->orWhere('status', 'COMPLETED')->count();
+        $distribusiSelesai = Distribution::where('status', 'COMPLETED')->count();
         if ($distribusiSelesai == 0) $distribusiSelesai = Distribution::count();
 
         // 2. Donation Trend (Last 6 Months)
@@ -121,12 +121,12 @@ class DashboardController extends Controller
 
     public function publicStats()
     {
-        $totalDana = Donation::where('payment_status', 'PAID')->orWhere('payment_status', 'SUCCESS')->sum('amount');
+        $totalDana = Donation::where('payment_status', 'completed')->sum('amount');
         if ($totalDana == 0) {
             $totalDana = Donation::sum('amount');
         }
 
-        $penerimaManfaat = User::count() * 15; // Estimasi
+        $penerimaManfaat = User::count() * 15;
         $donaturAktif = User::count(); // Estimasi dari total user terdaftar
 
         // Format angka (misal: 2 Miliar+, 10.000+)
