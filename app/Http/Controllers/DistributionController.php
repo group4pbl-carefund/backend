@@ -38,7 +38,15 @@ class DistributionController extends Controller
      */
     public function store(StoreDistributionRequest $request): JsonResponse
     {
-        $distribution = $this->distributionService->store($request->validated());
+        $validated = $request->validated();
+        
+        if ($request->hasFile('evidence_image')) {
+            $path = $request->file('evidence_image')->store('distributions', 'public');
+            $validated['evidence_url'] = '/storage/' . $path;
+            unset($validated['evidence_image']);
+        }
+
+        $distribution = $this->distributionService->store($validated);
         
         return $this->successResponse(new DistributionResource($distribution), 'Data distribusi berhasil disimpan', 201);
     }

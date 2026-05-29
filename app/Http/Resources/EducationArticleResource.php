@@ -14,6 +14,10 @@ class EducationArticleResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        $data = parent::toArray($request);
+        if (!empty($data['thumbnail_url']) && !str_starts_with($data['thumbnail_url'], 'http')) {
+            $data['thumbnail_url'] = asset($data['thumbnail_url']);
+        }
+        return $data;
     }
 }

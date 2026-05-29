@@ -25,7 +25,7 @@ class StoreDistributionRequest extends FormRequest
             'recipient_location' => 'nullable|string|max:255',
             'amount'           => 'required|numeric|min:0',
             'status'           => 'required|string|max:50',
-            'evidence_url'     => 'nullable|url',
+            'evidence_image'   => 'nullable|image|max:5120',
             'notes'            => 'nullable|string',
         ];
     }

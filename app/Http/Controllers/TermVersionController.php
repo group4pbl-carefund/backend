@@ -16,7 +16,7 @@ class TermVersionController extends Controller
      */
     public function index()
     {
-        return $this->successResponse(TermVersionResource::collection(TermVersion::all()));
+        return $this->successResponse(TermVersion::all());
     }
 
     /**
@@ -26,7 +26,7 @@ class TermVersionController extends Controller
      */
     public function store(StoreTermVersionRequest $request)
     {
-        return $this->successResponse(new TermVersionResource(TermVersion::create($request->validated())));
+        return $this->successResponse(TermVersion::create($request->validated()));
     }
 
     /**
@@ -36,7 +36,7 @@ class TermVersionController extends Controller
      */
     public function show(TermVersion $termVersion)
     {
-        return $this->successResponse(new TermVersionResource($termVersion));
+        return $this->successResponse($termVersion);
     }
 
     /**
@@ -47,7 +47,7 @@ class TermVersionController extends Controller
     public function update(UpdateTermVersionRequest $request, TermVersion $termVersion)
     {
         $termVersion->update($request->validated());
-        return $this->successResponse(new TermVersionResource($termVersion));
+        return $this->successResponse($termVersion);
     }
 
     /**

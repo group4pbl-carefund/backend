@@ -17,7 +17,7 @@ class ProgramController extends Controller
      */
     public function index()
     {
-        return $this->successResponse(ProgramResource::collection(Program::with('user')->get()));
+        return $this->successResponse(ProgramResource::collection(Program::with(['user', 'campaign', 'distribution'])->get()));
     }
 
     /**
@@ -53,7 +53,7 @@ class ProgramController extends Controller
      */
     public function show(Program $program)
     {
-        return $this->successResponse(new ProgramResource($program));
+        return $this->successResponse(new ProgramResource($program->load(['user', 'campaign', 'distribution'])));
     }
 
     /**

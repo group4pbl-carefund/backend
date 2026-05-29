@@ -17,7 +17,7 @@ class DashboardController extends Controller
     {
         $activeCampaigns = ProgramCampaign::with('program')
             ->whereHas('program', function($query) {
-                $query->whereIn('status', ['ACTIVE', 'COMPLETED', 'active', 'completed']);
+                $query->whereIn('status', ['ACTIVE', 'COMPLETED', 'active', 'completed', 'approved']);
             })->get();
 
         $total = 0;
@@ -25,7 +25,7 @@ class DashboardController extends Controller
             $type = strtolower($campaign->program->beneficiary_type ?? 'lembaga');
             $amount = $campaign->current_amount ?? 0;
 
-            if (in_array($type, ['diri sendiri', 'self', 'orang lain', 'others', 'individu', 'personal'])) {
+            if (in_array($type, ['diri sendiri', 'diri_sendiri', 'self', 'orang lain', 'orang_lain', 'others', 'individu', 'personal'])) {
                 $total += 1;
             } elseif (in_array($type, ['keluarga', 'family'])) {
                 $total += 4; // Estimasi rata-rata anggota keluarga
@@ -42,7 +42,7 @@ class DashboardController extends Controller
     {
         // 1. Stats
         $totalDana = ProgramCampaign::whereHas('program', function($query) {
-            $query->whereIn('status', ['ACTIVE', 'COMPLETED', 'active', 'completed']);
+            $query->whereIn('status', ['ACTIVE', 'COMPLETED', 'active', 'completed', 'approved']);
         })->sum('current_amount');
 
         $penerimaManfaat = $this->calculatePenerimaManfaat();
@@ -148,7 +148,7 @@ class DashboardController extends Controller
     public function publicStats()
     {
         $totalDana = ProgramCampaign::whereHas('program', function($query) {
-            $query->whereIn('status', ['ACTIVE', 'COMPLETED', 'active', 'completed']);
+            $query->whereIn('status', ['ACTIVE', 'COMPLETED', 'active', 'completed', 'approved']);
         })->sum('current_amount');
 
         $penerimaManfaat = $this->calculatePenerimaManfaat();

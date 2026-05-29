@@ -48,6 +48,19 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    protected $appends = ['accepted_terms_version'];
+
+    public function getAcceptedTermsVersionAttribute()
+    {
+        $latestAgreement = $this->termsAgreements()
+            ->join('term_versions', 'user_terms_agreements.version_id', '=', 'term_versions.version_id')
+            ->orderBy('user_terms_agreements.agreed_at', 'desc')
+            ->select('term_versions.version_number')
+            ->first();
+            
+        return $latestAgreement ? $latestAgreement->version_number : null;
+    }
+
     /**
      * Get the attributes that should be cast.
      *

@@ -25,7 +25,7 @@ class Donation extends Model
 
     public function program(): BelongsTo
     {
-        return $this->belongsTo(Program::class);
+        return $this->belongsTo(Program::class, 'program_id', 'program_id');
     }
 
     public function user(): BelongsTo

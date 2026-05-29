@@ -36,11 +36,21 @@ class Program extends Model
 
     public function donations()
     {
-        return $this->hasMany(Donation::class);
+        return $this->hasMany(Donation::class, 'program_id', 'program_id');
     }
 
     public function user()
     {
         return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function campaign()
+    {
+        return $this->hasOne(ProgramCampaign::class, 'program_id', 'program_id');
+    }
+
+    public function distribution()
+    {
+        return $this->hasOne(\App\Models\Distribution::class, 'program_id', 'program_id');
     }
 }

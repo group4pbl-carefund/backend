@@ -28,6 +28,7 @@ class UserResource extends JsonResource
             'is_verified' => $this->is_verified,
             'role' => $this->role,
             'avatar_url' => $this->avatar_url,
+            'accepted_terms_version' => $this->termsAgreements()->with('version')->latest('agreed_at')->first()?->version?->version_number,
             'identities' => $this->whenLoaded('identities'),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

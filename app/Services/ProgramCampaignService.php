@@ -41,14 +41,23 @@ class ProgramCampaignService
         return $campaign->delete();
     }
 
-    // Fungsi tambahan untuk mencatat donasi masuk
     public function recordSuccessfulDonation(ProgramCampaign $campaign, float $amount): ProgramCampaign
     {
         $campaign->increment('current_amount', $amount);
         $campaign->increment('available_balance', $amount);
         $campaign->increment('donor_count', 1);
 
-        return $campaign->fresh();
+        $campaign = $campaign->fresh(['program']);
+        
+        // Auto-complete if target is reached
+        if ($campaign->program && $campaign->program->target_amount > 0) {
+            if ($campaign->current_amount >= $campaign->program->target_amount) {
+                $campaign->program->update(['status' => 'completed']);
+                // Note: program_campaigns table may not have 'status', but if it does we would update it here
+            }
+        }
+
+        return $campaign;
     }
 
     public function extendCampaign(ProgramCampaign $campaign): ProgramCampaign

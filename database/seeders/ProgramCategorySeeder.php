@@ -25,11 +25,7 @@ class ProgramCategorySeeder extends Seeder
                 'description' => 'Bantuan darurat bagi korban bencana alam seperti banjir, gempa bumi, gunung berapi, dan lainnya',
                 'icon_url' => 'https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=200',
             ],
-            [
-                'category_name' => 'Zakat & Infak',
-                'description' => 'Program pengelolaan zakat dan infak untuk membantu saudara-saudara yang membutuhkan',
-                'icon_url' => 'https://images.unsplash.com/photo-1565008447742-97f6f38c4d8e?w=200',
-            ],
+
             [
                 'category_name' => 'Sosial',
                 'description' => 'Program bantuan sosial untuk komunitas, panti asuhan, lanjut usia, dan kelompok rentan lainnya',
@@ -40,16 +36,7 @@ class ProgramCategorySeeder extends Seeder
                 'description' => 'Program pelestarian lingkungan, reboisasi, dan pengelolaan sampah',
                 'icon_url' => 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=200',
             ],
-            [
-                'category_name' => 'Ekonomi',
-                'description' => 'Program pemberdayaan ekonomi masyarakat melalui usaha mikro dan modal kerja',
-                'icon_url' => 'https://images.unsplash.com/photo-1553729459-efe14ef6055d?w=200',
-            ],
-            [
-                'category_name' => 'Keagamaan',
-                'description' => 'Program pembangunan mosques, musholla, dan kegiatan keagamaan',
-                'icon_url' => 'https://images.unsplash.com/photo-1564769624456-ddd3fbad8b03?w=200',
-            ],
+
         ];
 
         foreach ($categories as $category) {
