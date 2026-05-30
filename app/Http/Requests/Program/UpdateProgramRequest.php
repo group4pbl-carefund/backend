@@ -26,6 +26,10 @@ class UpdateProgramRequest extends FormRequest
             'admin_feedback' => 'nullable|string',
             'beneficiary_type' => 'nullable|string',
             'documents' => 'nullable|array',
+            'ktp_file' => 'nullable|file|mimes:jpeg,png,jpg,pdf|max:5120',
+            'selfie_file' => 'nullable|file|mimes:jpeg,png,jpg,pdf|max:5120',
+            'supporting_docs' => 'nullable|array',
+            'supporting_docs.*' => 'file|mimes:jpeg,png,jpg,pdf|max:10240',
         ];
     }
 }

@@ -8,7 +8,7 @@ class StoreProgramRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return true;
+        return auth()->check() && auth()->user()->is_verified;
     }
 
     public function rules(): array
@@ -31,6 +31,10 @@ class StoreProgramRequest extends FormRequest
             'rab_items' => 'nullable|array',
             'beneficiary_type' => 'nullable|string',
             'documents' => 'nullable|array',
+            'ktp_file' => 'nullable|file|mimes:jpeg,png,jpg,pdf|max:5120',
+            'selfie_file' => 'nullable|file|mimes:jpeg,png,jpg,pdf|max:5120',
+            'supporting_docs' => 'nullable|array',
+            'supporting_docs.*' => 'file|mimes:jpeg,png,jpg,pdf|max:10240',
             'admin_feedback' => 'nullable|string',
         ];
     }

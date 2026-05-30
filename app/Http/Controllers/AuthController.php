@@ -242,7 +242,6 @@ class AuthController extends Controller
 
         // OTP verified successfully
         $user->email_verified_at = now();
-        $user->is_verified = true;
         $user->otp_code = null;
         $user->otp_expires_at = null;
         $user->save();

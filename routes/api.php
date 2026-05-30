@@ -54,6 +54,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index']);
     
     Route::apiResource('programs', ProgramController::class);
+    Route::post('programs/{program}/updates', [ProgramController::class, 'addUpdate']);
     Route::post('program-campaigns/{programCampaign}/extend', [ProgramCampaignController::class, 'extend']);
     Route::get('program-campaigns/{programCampaign}/donors', [ProgramCampaignController::class, 'donors']);
     Route::apiResource('program-campaigns', ProgramCampaignController::class);

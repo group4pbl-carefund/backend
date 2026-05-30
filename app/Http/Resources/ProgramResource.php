@@ -37,6 +37,7 @@ class ProgramResource extends JsonResource
             'account_number' => $this->account_number,
             'account_owner' => $this->account_owner,
             'rab_items' => $this->rab_items,
+            'updates' => $this->updates,
             'created_by' => $this->created_by,
             'user' => $this->whenLoaded('user', function () {
                 return [

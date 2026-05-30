@@ -26,12 +26,14 @@ class Program extends Model
         'bank_name',
         'account_number',
         'account_owner',
-        'rab_items'
+        'rab_items',
+        'updates'
     ];
 
     protected $casts = [
         'rab_items' => 'array',
         'documents' => 'array',
+        'updates' => 'array',
     ];
 
     public function donations()
