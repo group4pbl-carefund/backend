@@ -1,0 +1,24 @@
+<?php
+
+namespace App\Services;
+
+use App\Models\User;
+
+class UserService
+{
+    public function getAllUsers()
+    {
+        return User::with('identities')->orderBy('created_at', 'desc')->paginate(10);
+    }
+
+    public function updateUser(User $user, array $data)
+    {
+        $user->update($data);
+        return $user;
+    }
+
+    public function deleteUser(User $user)
+    {
+        return $user->delete();
+    }
+}

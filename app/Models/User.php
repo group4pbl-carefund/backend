@@ -3,19 +3,63 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Database\Factories\UserFactory;
-use Illuminate\Database\Eloquent\Attributes\Fillable;
-use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 
-#[Fillable(['name', 'email', 'password'])]
-#[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
-    /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable;
+
+    /** @use HasFactory<\Database\Factories\UserFactory> */
+    use HasApiTokens, HasFactory, Notifiable;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var list<string>
+     */
+    protected $fillable = [
+        'full_name',
+        'email',
+        'phone',
+        'date_of_birth',
+        'gender',
+        'address',
+        'city',
+        'state',
+        'country',
+        'is_verified',
+        'role',
+        'password',
+        'email_verified_at',
+        'otp_code',
+        'otp_expires_at',
+        'avatar_url',
+    ];
+
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var list<string>
+     */
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+    protected $appends = ['accepted_terms_version'];
+
+    public function getAcceptedTermsVersionAttribute()
+    {
+        $latestAgreement = $this->termsAgreements()
+            ->join('term_versions', 'user_terms_agreements.version_id', '=', 'term_versions.version_id')
+            ->orderBy('user_terms_agreements.agreed_at', 'desc')
+            ->select('term_versions.version_number')
+            ->first();
+            
+        return $latestAgreement ? $latestAgreement->version_number : null;
+    }
 
     /**
      * Get the attributes that should be cast.
@@ -26,7 +70,48 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
+            'otp_expires_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function donations()
+    {
+        return $this->hasMany(Donation::class);
+    }
+
+    public function programs()
+    {
+        return $this->hasMany(Program::class, 'created_by');
+    }
+
+    public function identities()
+    {
+        return $this->hasMany(UserIdentity::class);
+    }
+
+    public function sessions()
+    {
+        return $this->hasMany(UserSession::class);
+    }
+
+    public function termsAgreements()
+    {
+        return $this->hasMany(UserTermsAgreement::class);
+    }
+
+    public function securityMonitorings()
+    {
+        return $this->hasMany(SecurityMonitoring::class);
+    }
+
+    public function educationArticles()
+    {
+        return $this->hasMany(EducationArticle::class, 'author_id');
+    }
+
+    public function educationViews()
+    {
+        return $this->hasMany(EducationView::class);
     }
 }
