@@ -63,6 +63,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('program-campaigns/{programCampaign}/extend', [ProgramCampaignController::class, 'extend']);
     Route::apiResource('program-campaigns', ProgramCampaignController::class)->except(['index', 'show']);
     Route::patch('donations/{donation}/complete', [\App\Http\Controllers\DonationController::class, 'complete']);
+    Route::patch('donations/{donation}/cancel', [\App\Http\Controllers\DonationController::class, 'cancel']);
     Route::apiResource('donations', \App\Http\Controllers\DonationController::class);
     Route::apiResource('distributions', DistributionController::class);
     Route::apiResource('payment-logs', PaymentLogController::class);

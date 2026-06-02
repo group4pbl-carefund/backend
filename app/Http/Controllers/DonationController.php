@@ -66,4 +66,22 @@ class DonationController extends Controller
 
         return $this->successResponse(new DonationResource($donation), 'Donasi berhasil diselesaikan');
     }
+
+    /**
+     * Membatalkan donasi.
+     *
+     * Mengubah status pembayaran menjadi cancel.
+     */
+    public function cancel(\App\Models\Donation $donation): JsonResponse
+    {
+        if ($donation->payment_status !== 'pending') {
+            return $this->errorResponse('Donasi tidak dapat dibatalkan', 400);
+        }
+
+        $donation->update([
+            'payment_status' => 'failed',
+        ]);
+
+        return $this->successResponse(new DonationResource($donation), 'Donasi berhasil dibatalkan');
+    }
 }
