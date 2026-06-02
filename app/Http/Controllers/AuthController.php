@@ -26,7 +26,7 @@ class AuthController extends Controller
             'full_name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'phone' => 'nullable|string|max:20',
-            'password' => 'required|string|min:8|confirmed',
+            'password' => 'required|string|min:8|max:21|regex:/^[a-zA-Z0-9]+$/|confirmed',
             'date_of_birth' => 'nullable|date',
             'gender' => 'nullable|string|in:male,female,other',
             'address' => 'nullable|string',
@@ -87,7 +87,7 @@ class AuthController extends Controller
     {
         $request->validate([
             'email' => 'required|string|email',
-            'password' => 'required|string',
+            'password' => 'required|string|min:8|max:21|regex:/^[a-zA-Z0-9]+$/',
             'otp_code' => 'nullable|string|size:6',
         ]);
 

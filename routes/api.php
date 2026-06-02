@@ -37,6 +37,11 @@ Route::post('/resend-otp', [AuthController::class, 'resendOtp']);
 Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
 Route::post('/reset-password', [AuthController::class, 'resetPassword']);
 
+// Public Program Campaigns
+Route::get('program-campaigns', [ProgramCampaignController::class, 'index']);
+Route::get('program-campaigns/{programCampaign}', [ProgramCampaignController::class, 'show']);
+Route::get('program-campaigns/{programCampaign}/donors', [ProgramCampaignController::class, 'donors']);
+
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/me', [AuthController::class, 'me']);
     Route::post('/logout', [AuthController::class, 'logout']);
@@ -56,8 +61,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('programs', ProgramController::class);
     Route::post('programs/{program}/updates', [ProgramController::class, 'addUpdate']);
     Route::post('program-campaigns/{programCampaign}/extend', [ProgramCampaignController::class, 'extend']);
-    Route::get('program-campaigns/{programCampaign}/donors', [ProgramCampaignController::class, 'donors']);
-    Route::apiResource('program-campaigns', ProgramCampaignController::class);
+    Route::apiResource('program-campaigns', ProgramCampaignController::class)->except(['index', 'show']);
     Route::patch('donations/{donation}/complete', [\App\Http\Controllers\DonationController::class, 'complete']);
     Route::apiResource('donations', \App\Http\Controllers\DonationController::class);
     Route::apiResource('distributions', DistributionController::class);

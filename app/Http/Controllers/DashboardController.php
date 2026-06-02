@@ -65,9 +65,12 @@ class DashboardController extends Controller
             $trendData[] = $sum;
         }
 
-        // 3. Category Data
-        $categories = Program::select('category', DB::raw('count(*) as total'))
-            ->groupBy('category')
+        // 3. Category Data (Based on Donation Amount)
+        $categories = DB::table('donations')
+            ->join('programs', 'donations.program_id', '=', 'programs.program_id')
+            ->whereIn('donations.payment_status', ['PAID', 'SUCCESS', 'completed', 'COMPLETED'])
+            ->select('programs.category', DB::raw('SUM(donations.amount) as total'))
+            ->groupBy('programs.category')
             ->get();
             
         $categoryLabels = [];
@@ -82,7 +85,11 @@ class DashboardController extends Controller
                 $query->withCount('donations');
             }])
             ->whereHas('program', function($query) {
-                $query->whereIn('status', ['active', 'approved']);
+                $query->whereIn('status', ['active', 'approved'])
+                      ->where(function($q) {
+                          $q->whereNull('end_date')
+                            ->orWhere('end_date', '>=', Carbon::now());
+                      });
             })
             ->get()
             ->filter(function($campaign) {

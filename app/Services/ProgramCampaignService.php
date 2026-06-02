@@ -9,7 +9,7 @@ class ProgramCampaignService
 {
     public function getAllCampaigns(?int $userId = null): Collection
     {
-        $query = ProgramCampaign::with('program');
+        $query = ProgramCampaign::with(['program', 'program.distribution']);
 
         if ($userId) {
             $query->whereHas('program', function ($q) use ($userId) {

@@ -18,7 +18,7 @@ class EducationArticleSeeder extends Seeder
 2. Periksa detail kampanye sebelum berdonasi
 3. Simpan bukti transaksi untuk keamanan
 4. Pantau perkembangan kampanye yang telah didukung',
-                'category' => 'Tips Berdonasi',
+                'category' => 'Security',
                 'author_id' => 1,
                 'thumbnail_url' => 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=400',
                 'status' => 'published',
@@ -33,7 +33,7 @@ Zakat terdiri dari:
 - Zakat Fitrah: Dibayarkan pada bulan Ramadan
 - Zakat Mal: Dari kekayaan yang telah mencapai nisab
 - Zakat Fidyah: Ganti makanan untuk orang yang tidak mampu puasa',
-                'category' => 'Keagamaan',
+                'category' => 'Regulation',
                 'author_id' => 2,
                 'thumbnail_url' => 'https://images.unsplash.com/photo-1577953138796-f5ae8c0e9c80?w=400',
                 'status' => 'published',
@@ -49,7 +49,7 @@ Penelitian menunjukkan bahwa:
 - Mengurangi stres dan kecemasan
 - Membuat merasa lebih terhubung dengan komunitas
 - Meningkatkan rasa syukur',
-                'category' => 'Kesehatan',
+                'category' => 'Payment',
                 'author_id' => 1,
                 'thumbnail_url' => 'https://images.unsplash.com/photo-1559757148-5c350d0d3c21?w=400',
                 'status' => 'published',
@@ -64,7 +64,7 @@ Penelitian menunjukkan bahwa:
 2. Cari informasi tentang pembuat kampanye
 3. Baca testimoni dari donatur sebelumnya
 4. Pantau transparansi penggunaan dana',
-                'category' => 'Tips Berdonasi',
+                'category' => 'Security',
                 'author_id' => 3,
                 'thumbnail_url' => 'https://images.unsplash.com/photo-1553729459-efe14ef6055d?w=400',
                 'status' => 'published',
@@ -80,7 +80,7 @@ Jenis scholarships yang tersedia:
 2. Scholarships dari universitas
 3. Scholarships dari perusahaan
 4. Scholarships dari organisasi sosial',
-                'category' => 'Pendidikan',
+                'category' => 'Regulation',
                 'author_id' => 2,
                 'thumbnail_url' => 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=400',
                 'status' => 'published',
@@ -98,7 +98,7 @@ Langkah-langkah:
 4. Unggah foto/video pendukung
 5. Tetapkan target realistis
 6. Sebarkan ke jaringan Anda',
-                'category' => 'Panduan',
+                'category' => 'Payment',
                 'author_id' => 1,
                 'thumbnail_url' => 'https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=400',
                 'status' => 'published',
@@ -114,7 +114,7 @@ Bergabung dengan sukarelawan memberikan:
 - Pengembangan keterampilan
 - Jaringan pertemanan baru
 - Kepuasan batin',
-                'category' => 'Kisah Inspiratif',
+                'category' => 'Security',
                 'author_id' => 3,
                 'thumbnail_url' => 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=400',
                 'status' => 'published',
@@ -130,7 +130,7 @@ Elemen transparansi:
 2. Verifikasi independent
 3. Akses donatur untuk melihat perkembangan
 4.Audit berkala',
-                'category' => 'Tips Berdonasi',
+                'category' => 'Regulation',
                 'author_id' => 1,
                 'thumbnail_url' => 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=400',
                 'status' => 'draft',
