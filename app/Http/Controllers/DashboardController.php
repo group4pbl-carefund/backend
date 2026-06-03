@@ -46,8 +46,12 @@ class DashboardController extends Controller
         })->sum('current_amount');
 
         $penerimaManfaat = $this->calculatePenerimaManfaat();
-        $programAktif = Program::where('status', 'ACTIVE')->count();
-        if ($programAktif == 0) $programAktif = Program::count();
+        $programAktif = Program::whereIn('status', ['ACTIVE', 'active', 'approved'])
+            ->where(function($query) {
+                $query->whereNull('end_date')
+                      ->orWhere('end_date', '>=', \Carbon\Carbon::now());
+            })
+            ->count();
 
         $distribusiSelesai = Distribution::count();
 
