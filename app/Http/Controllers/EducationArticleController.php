@@ -28,6 +28,12 @@ class EducationArticleController extends Controller
     {
         $data = $request->validated();
 
+        if (isset($data['content'])) {
+            $wordCount = str_word_count(strip_tags($data['content']));
+            $readTime = ceil($wordCount / 200);
+            $data['read_time'] = $readTime > 0 ? $readTime : 1;
+        }
+
         if ($request->hasFile('thumbnail')) {
             $path = $request->file('thumbnail')->store('articles', 'public');
             $data['thumbnail_url'] = '/storage/' . $path;
@@ -56,6 +62,12 @@ class EducationArticleController extends Controller
     {
         $educationArticle = EducationArticle::findOrFail($id);
         $data = $request->validated();
+
+        if (isset($data['content'])) {
+            $wordCount = str_word_count(strip_tags($data['content']));
+            $readTime = ceil($wordCount / 200);
+            $data['read_time'] = $readTime > 0 ? $readTime : 1;
+        }
 
         if ($request->hasFile('thumbnail')) {
             $path = $request->file('thumbnail')->store('articles', 'public');
