@@ -11,6 +11,7 @@ class UpdateUserIdentityRequest extends FormRequest
             'is_verified' => 'boolean',
             'verified_at' => 'date|nullable',
             'verified_by' => 'exists:users,id|nullable',
+            'identity_number' => 'sometimes|string',
         ];
     }
 }
